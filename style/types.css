@@ -1,0 +1,108 @@
+.default{
+    box-sizing: border-box;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size:30px;
+    height: 60px;
+    border-radius: 25px;
+}
+
+@media (max-width:470px) {
+    .default{
+        width: 40%;
+    }
+}
+
+
+.bug{   
+    background-color: #9cd147;
+    border:2px solid #95ac31;
+    color: #e8ffbe;
+}
+.fairy{   
+    background-color: #ec7fda;
+    border:2px solid #d349b0;
+    color: #ffffff;
+}
+.grass{
+    background-color: #04a809;
+    border:2px solid #274615;
+    color: #c9ffc6;
+}
+.poison{    
+    background-color: #9937ad;
+    border:2px solid #461544;
+    color: #ffc6fc;
+}
+.fire{    
+    background-color: #e86513;
+    border:2px solid #8d501f;
+    color: #ffe8c6;
+}
+.flying{    
+    background-color: #8e76d8;
+    border:2px solid #3f2a66;
+    color: #d5c6ff;
+}
+.ground{
+    background-color: #bda537;
+    border:2px solid #94782b;
+    color: #fcf8d7;
+}
+.steel{    
+    background-color: #9aa196;
+    border:2px solid #4d4d4d;
+    color: #fffdfd;
+}
+.dragon{
+    background-color: #482d86;
+    border:2px solid #3c076d;
+    color: #c1b5f7;
+}
+.dark{
+    background-color: #3a2a27;
+    border:2px solid #292c28;
+    color: #c4b1ac;
+}
+.normal{    
+    background-color: #b1ab78;
+    border:2px solid #837e4e;
+    color: #fafafa;
+}
+.rock{
+    background-color: #8f7e1c;
+    border:2px solid #6b5d0f;
+    color: #fff8d2;
+}
+.fighting{
+    background-color: #c21212;
+    border:2px solid #751919;
+    color: #fce3e3;
+}
+.electric{
+    background-color: #e0c10d;
+    border:2px solid #9e890e;
+    color: #fdf6cf;
+}
+.ice{ 
+    background-color: #00ffbf;
+    border:2px solid #3d7a7c;
+    color: #ffffff;
+}
+.water{
+    background-color: #4b8cb8;
+    border:2px solid #15526d;
+    color: #b4fcfc;
+}
+.psychic{    
+    background-color: #ec407a;
+    border:2px solid #b32252;
+    color: #f8d7f0;
+}
+.ghost{    
+    background-color: #461b7e;
+    border:2px solid #3f2764;
+    color: #dcc6ff;
+}

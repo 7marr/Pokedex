@@ -1,0 +1,62 @@
+.common{
+    background-color: #757575;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #a4a4a4;
+}
+.legendary{
+    background-color: #e7c817 ;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #ffe54f ;
+
+}
+.mythical{
+    background-color: #971355 ;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #af3170 ;
+
+}
+.none{
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #ffffff ;
+
+}
+
+
+
+
+
+
+
+/*--------------------------*/
+.heart {
+    width: 16px;
+    height: 16px;
+    position: relative;
+    background-color: #d4d4d4; 
+    transform: rotate(-45deg);
+  }
+  .heart::before,
+  .heart::after {
+    content: "";
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #d4d4d4; 
+    position: absolute;
+  }
+  .heart::before {
+    top: -8px;
+    left: 0;
+  }
+  .heart::after {
+    top: 0;
+    left: 8px;
+  }

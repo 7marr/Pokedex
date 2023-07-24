@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/header.css">
+    <link rel="stylesheet" href="style/scroll bar.css">
+    <link rel="stylesheet" href="style/info1.css">
+    <link rel="stylesheet" href="style/info2.css">
+    <link rel="stylesheet" href="style/info3.css">
+    <link rel="stylesheet" href="style/types.css">
+    <link rel="stylesheet" href="style/uniqueness.css">
+
+
+    <link rel="icon" href="img/web icon.png" type="image/png">
+
+    <title>Pokedex</title>
+
+</head>
+<body>
+        <!----------Header---------->
+    <header class="header">
+
+        <!--------Logo-------->
+        <div class="logo">
+            <a href="index.html">
+                <img src="img/icon.png" alt="pokedex">
+            </a>
+        </div>
+
+            <!--------Search-------->
+        <div class="search-container">
+            <a href="search.html">
+                <button type="button" class="search button">
+                    <img src="img/search icon.png" alt="search">
+                </button>
+            </a>
+            <a href="https://youtube.com/@sofyann_/videos">
+                <button type="button" class="search info">
+                    <img src="img/info Icon.png" alt="!">
+                </button>
+            </a>
+        </div>
+    </header>
+
+
+    <!-- Empty area -->
+    <div id="aaaa"></div>
+
+
+
+
+    <div class="container"> 
+
+        <!--(Name,Id,Image) box-->
+        <div class="box n1">
+            <h6 id="id"></h6>
+            <h1 id="name"></h1>
+            <img id="image">
+        </div>
+
+
+
+        <div class="box n2">
+            <!--  ENTRY  -->
+            <div class="space entry">No Pokedex entry was provided</div>
+
+            <!--  HEIGHT AND WEIGHT  -->
+
+            <div class="space">
+
+                <div class="height">
+                    <div>Height :</div><div id="height">?</div>
+                </div>
+
+                <div class="weight">
+                    <div>Weight :</div><div id="weight">?</div>
+                </div>
+
+            </div>
+
+            <!--  ABILITIES  -->
+
+            <div class="space ability">
+                <div>Ability</div>
+                <p>:</p>
+                <div id="ability">?</div>
+            </div>
+
+            <div class="space ability">
+                <div>Hidden ability</div>
+                <p>:</p>
+                <div id="hidden">?</div>
+            </div>
+
+
+            <!--  GEN AND UNNIQUENESS  -->
+
+            <div class="space transparent">
+
+                <div class="gen">
+                    <div>Generation :</div>
+                    <div id="generation">?</div>
+                </div>
+
+                <div class="unique">
+                    <div id="uniqueness" class="none"></div>
+                    <div class="uniqueness">?</div>
+                </div>
+
+
+            </div>
+
+
+
+            <div class="types">
+                <div id="t1" class=""></div>
+                <div id="t2" class=""></div>
+            </div>
+            
+        </div>
+    </div>
+    
+
+
+    <div class="container">
+        <div class="box n5">
+            <h2>Sprites :</h2>
+            <div class="pixelated">
+                <div id="p-normal">
+                    <img src="" alt="" id="fd">
+                    <img src="" alt="" id="bd">
+                </div>
+                <div id="p-shiny">
+                    <img src="" alt="" id="fs">
+                    <img src="" alt="" id="bs">
+                </div>
+            </div>
+            <div class="not-pixelated">
+                <div class="artwork">
+                    <div class="aw-normal">
+                        <img src="" alt="" id="n-aw">
+                    </div>
+                    <div class="aw-shiny">
+                        <img src="" alt="" id="s-aw">
+                    </div>
+                </div>
+
+                <div class="home">
+                    <div class="home-normal">
+                        <img src="" alt="" id="n-3d">
+                    </div>
+                    <div class="3d-shiny">
+                        <img src="" alt="" id="s-3d">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <script src="script/info_script.js"></script>
+</body>
+</html>
