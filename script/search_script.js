@@ -7,7 +7,7 @@ const search_box = document.getElementsByClassName("search-box")[0];
 
 // Constants and URLs
 const max_pokemons = 1010;
-const json_url = "https://raw.githubusercontent.com/7marr/Pokedex/main/json/";
+const json_url = "https://raw.githubusercontent.com/7marr/Pokedex/main/script/json/";
 const pokeapi_url="https://pokeapi.co/api/v2/pokemon/"
 
 // Variables
@@ -99,7 +99,7 @@ function is_int() {
 
 // Function to perform the search
 function search(type) {
-    for (let i = 0;!new_search && checked_pokemons < max_pokemons && matches < 90 &&search_value!=""; i++) {
+    for (let i = 0;!new_search && checked_pokemons < max_pokemons && matches < 60 &&search_value!=""; i++) {
         const pokemon = json_data[i];
         if (!pokemon) {
             // If we reached the end of the current JSON file, fetch the next one
@@ -119,7 +119,7 @@ function search(type) {
         loading.style.display="none"
         negative.style.display="flex"
     }
-    if (!new_search && matches >= 90 || checked_pokemons >= max_pokemons&&search_value!="") {
+    if (!new_search && matches >= 60 || checked_pokemons >= max_pokemons&&search_value!="") {
         fetching_pokemon();
       }
 
