@@ -24,6 +24,11 @@
     z-index: 50;
 
 }
+@media (max-width:450px) {
+    .pokemon-box{
+        width: 200px;
+    }
+}
 .pokemon-box:hover{
     transform: scale(1.1);
 }

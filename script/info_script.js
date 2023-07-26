@@ -2,7 +2,7 @@
 const URL = new URLSearchParams(window.location.search);
 const id = URL.get("id");
 let evolution_chain_id
-let type_num = 0;
+let type_num = [];
 
 // Base URLs for API endpoints
 const API_url_pokemon = "https://pokeapi.co/api/v2/pokemon/";
@@ -28,6 +28,7 @@ function display_pokemon_1(data) {
   const pokemon_weight = data.weight;
   let pokemon_abilities = get_abilities(data.abilities);
   let pokemon_types = get_types(data.types);
+  let pokemon_stats= data.stats
   // Get HTML elements and store them
   const id_element = document.getElementById("id");
   const name_element = document.getElementById("name");
@@ -54,8 +55,8 @@ function display_pokemon_1(data) {
   set_type(pokemon_types, type_1_element, type_2_element);
   name_size(pokemon_name, name_element);
   set_abilities(pokemon_abilities, ability_element, hidden_class, hidden_element);
-
   set_sprite(pokemon_image,data)
+  set_stats(pokemon_stats)
 }
 
 
@@ -114,14 +115,12 @@ function set_type(type, type_1_element, type_2_element) {
   }
 
 
-  try {
-    if (type.length === 1) {
-      type_2_element.remove();
-      type_1_element.style.width="250px"
-    }
-  } catch (error) {
-    console.log("just ignore this stupid error")
+  
+  if (type.length === 1) {
+    type_2_element.remove();
+    type_1_element.style.width="200px"
   }
+
 }
 
 // Function to get abilities from the data and categorize them into normal and hidden abilities
@@ -213,7 +212,22 @@ function set_sprite(img_url5,data){
 
 
 }
+function set_stats(stats){
+  stat_arr=[]
+  for(let i=0;i<stats.length;i++){
+    document.getElementsByClassName("bar")[i].textContent=stats[i].base_stat
+    stat_arr.push(parseInt(document.getElementsByClassName("bar")[i].textContent))
+  }
+  const total= stat_arr.reduce((acc, curr) => acc + curr, 0);
+  document.getElementById("total").textContent=total
+  const max_num=Math.max(...stat_arr)
+  const bars=["h","a","d","s-a","s-d","s"]
+  for(let i=0;i<6;i++){
+    const bar_width=Math.round((100*stat_arr[i]/max_num)*75/100)
+    document.getElementsByClassName(bars[i])[0].style.width=String(bar_width)+"%"
+  }
 
+}
 
 
 // Function to find and return English description from the available descriptions
