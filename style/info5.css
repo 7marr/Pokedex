@@ -1,0 +1,25 @@
+.n4{
+    width: 500px;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+}
+.title{
+    text-align: center;
+    color: #cecece;
+    font-size: 25px;
+    font-weight: bold;
+}
+.chart{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.a-type{
+    display: flex;
+    margin: 5px;
+}

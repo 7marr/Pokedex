@@ -8,7 +8,7 @@ let type_num = [];
 const API_url_pokemon = "https://pokeapi.co/api/v2/pokemon/";
 const API_url_pokemon_species = "https://pokeapi.co/api/v2/pokemon-species/";
 const API_url_evolution_chain="https://pokeapi.co/api/v2/evolution-chain/"
-
+const github_types_url="https://raw.githubusercontent.com/7marr/Pokedex/main/script/json/types/"
 /* --------- Fetching and Displaying Pokemon Data Group --------- */
 
 // Fetch Pokemon data from API and call display_pokemon_1 to show it
@@ -57,6 +57,7 @@ function display_pokemon_1(data) {
   set_abilities(pokemon_abilities, ability_element, hidden_class, hidden_element);
   set_sprite(pokemon_image,data)
   set_stats(pokemon_stats)
+  fetch_damage(pokemon_types)
 }
 
 
@@ -166,7 +167,7 @@ function set_uniqueness(is_legendary, is_mythical, uniqueness_icon, uniqueness_l
     uniqueness_icon.classList = "mythical";
     uniqueness_label.textContent = "Mythical";
     uniqueness_label.style.color = "#ff00bf";
-  } else if (id == 258 || id == 259 || id == 260) {
+  } else if (id == 258 || id == 259 || id == 260||id==570||id==571) {
     uniqueness_icon.classList = "heart";
     uniqueness_label.textContent = "Awesome";
     uniqueness_label.style.color = "#ffffff";
@@ -228,6 +229,74 @@ function set_stats(stats){
   }
 
 }
+async function fetch_damage(types){
+  if(types.length==1){
+    fetch(`${github_types_url}${types[0]}.json`)
+    .then(res=>res.json())
+    .then(data=>set_damage(data))
+    
+  }
+  else if(types.length==2){
+    let data=[]
+    for(let i=0;i<2;i++){
+      await fetch(`${github_types_url}${types[i]}.json`)
+      .then(res=>res.json())
+      .then(res=>{
+        data.push(res)
+      })
+    }
+    calc_damage(data)
+  }
+}
+function calc_damage(data){
+  let calculated_data=data[0]
+
+  for(let i=0;i<data[0].length;i++){
+    calculated_data[i].damage=data[0][i].damage*data[1][i].damage
+  }
+  set_damage(calculated_data)
+}
+function set_damage(data){
+  let weaknesses=[]
+  let resistences=[]
+  for(let i=0;i<data.length;i++){
+    if(data[i].damage>1){
+      weaknesses.push(data[i])
+    }
+    else if(data[i].damage<1){
+      resistences.push(data[i])
+    }
+  }
+  weaknesses_container=document.getElementById("weakness")
+  resistences_container=document.getElementById("resistant")
+
+  for(let i=0;i<weaknesses.length;i++){
+    weaknesses_container.appendChild(display_damage(weaknesses[i]))
+  }
+  for(let i=0;i<resistences.length;i++){
+    resistences_container.appendChild(display_damage(resistences[i]))
+  }
+}
+
+function display_damage(thing){
+  const a_type=document.createElement("div")
+  const type=document.createElement("div")
+  const damage=document.createElement("div")
+
+  a_type.classList="a-type"
+
+  type.classList=`secondary ${thing.name}`
+  type.textContent=thing.name.toUpperCase()
+
+  damage.classList=`damage d-${thing.name}`
+  damage.textContent=String(thing.damage).replace("0.5","½").replace("0.25","¼")+"x"
+
+  a_type.appendChild(type)
+  a_type.appendChild(damage)
+  return a_type
+}
+
+
 
 
 // Function to find and return English description from the available descriptions
