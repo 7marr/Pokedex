@@ -9,20 +9,6 @@
     border-radius: 25px;
     border:2px solid transparent;
 }
-
-@media (max-width:470px) {
-    .default{
-        width: 40%;
-    }
-    .secondary{
-        width: 70px;
-    }
-    .damage{
-        width: 25px;
-    }
-}
-
-
 .secondary{
     box-sizing: border-box;
     width: 100px;
@@ -38,7 +24,6 @@
 
 }
 .damage{
-    border-left: 0px;
     box-sizing: border-box;
     width: 40px;
     display: flex;
@@ -49,7 +34,24 @@
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     border:1px solid transparent;
+    border-left: 0px;
 }
+
+@media (max-width:470px) {
+    .default{
+        width: 40%;
+    }
+    .secondary{
+        width: 70px;
+        font-size: 14px;
+    }
+    .damage{
+        width: 25px;
+        font-size: 13px;
+    }
+}
+
+
 
 .bug{   
     background-color: #9cd147;
