@@ -7,7 +7,7 @@ const search_box = document.getElementsByClassName("search-box")[0];
 
 // Constants and URLs
 const max_pokemons = 1010;
-const json_url = "https://raw.githubusercontent.com/7marr/Pokedex/main/script/json/";
+const json_url = "https://raw.githubusercontent.com/7marr/Pokedex/main/script/json/search/";
 const pokeapi_url="https://pokeapi.co/api/v2/pokemon/"
 
 // Variables
