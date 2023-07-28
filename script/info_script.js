@@ -271,14 +271,14 @@ function set_damage(data){
   resistences_container=document.getElementById("resistant")
 
   for(let i=0;i<weaknesses.length;i++){
-    weaknesses_container.appendChild(display_damage(weaknesses[i]))
+    weaknesses_container.appendChild(display_damage(weaknesses[i],weaknesses.length))
   }
   for(let i=0;i<resistences.length;i++){
-    resistences_container.appendChild(display_damage(resistences[i]))
+    resistences_container.appendChild(display_damage(resistences[i],resistences.length))
   }
 }
 
-function display_damage(thing){
+function display_damage(thing,len){
   const a_type=document.createElement("div")
   const type=document.createElement("div")
   const damage=document.createElement("div")
@@ -290,6 +290,18 @@ function display_damage(thing){
 
   damage.classList=`damage d-${thing.name}`
   damage.textContent=String(thing.damage).replace("0.5","½").replace("0.25","¼")+"x"
+
+  if(len==1){
+    type.style.height="45px"
+    damage.style.height="45px"
+    type.style.fontSize="19px"
+    damage.style.fontSize="19px"
+  }
+  else{
+    type.style.height="35px"
+    damage.style.height="35px"
+  }
+
 
   a_type.appendChild(type)
   a_type.appendChild(damage)

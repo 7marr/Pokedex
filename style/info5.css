@@ -21,5 +21,7 @@
 }
 .a-type{
     display: flex;
+    justify-content: center;
     margin: 5px;
+    flex-grow: 1;
 }

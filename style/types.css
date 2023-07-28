@@ -11,7 +11,8 @@
 }
 .secondary{
     box-sizing: border-box;
-    width: 100px;
+    min-width: 100px;
+    width: 71%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -25,7 +26,8 @@
 }
 .damage{
     box-sizing: border-box;
-    width: 40px;
+    max-width: 50px;
+    width: 20%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -42,12 +44,12 @@
         width: 40%;
     }
     .secondary{
-        width: 70px;
+        min-width: 70px;
         font-size: 14px;
     }
     .damage{
-        width: 25px;
-        font-size: 13px;
+        min-width: 30px;
+        font-size: 15px;
     }
 }
 
@@ -124,9 +126,9 @@
     color: #fdf6cf;
 }
 .ice{ 
-    background-color: #00ffbf;
+    background-color: #48cfae;
     border-color : #3d7a7c;
-    color: #e5f2f5;
+    color: #def9ff;
 }
 .water{
     background-color: #4b8cb8;
