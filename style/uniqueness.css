@@ -13,6 +13,14 @@
     border: 2px solid #ffe54f ;
 
 }
+.pseudo-legendary{
+  background-color: #ff8f00 ;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #fdbd69 ;
+
+}
 .mythical{
     background-color: #971355 ;
     width: 20px;
@@ -20,6 +28,13 @@
     border-radius: 50%;
     border: 2px solid #af3170 ;
 
+}
+.baby{
+  background-color: #fa80bd ;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #faaad2 ;
 }
 .none{
   width: 20px;

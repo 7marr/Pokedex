@@ -9,6 +9,7 @@ const API_url_pokemon = "https://pokeapi.co/api/v2/pokemon/";
 const API_url_pokemon_species = "https://pokeapi.co/api/v2/pokemon-species/";
 const API_url_evolution_chain="https://pokeapi.co/api/v2/evolution-chain/"
 const github_types_url="https://raw.githubusercontent.com/7marr/Pokedex/main/script/json/types/"
+const github_sprited_url="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/"//ex : back/shiny/637.gif 
 /* --------- Fetching and Displaying Pokemon Data Group --------- */
 
 // Fetch Pokemon data from API and call display_pokemon_1 to show it
@@ -22,7 +23,7 @@ function fetching_pokemon_1() {
 function display_pokemon_1(data) {
   // Extract Pokemon data
   const pokemon_id = id_format(data.id);
-  const pokemon_name = remove_unnecessary(capitalize(data.name)).replaceAll("-"," ").replace("Nidoran m", "Nidoran ♂").replace("Nidoran f", "Nidoran ♀");
+  const pokemon_name = remove_unnecessary(capitalize(data.name));
   const pokemon_image = data.sprites.other["official-artwork"].front_default;
   const pokemon_height = data.height;
   const pokemon_weight = data.weight;
@@ -75,6 +76,7 @@ function display_pokemon_2(data) {
   let pokemon_gen = data.generation["name"];
   const is_legendary = data.is_legendary;
   const is_mythical = data.is_mythical;
+  const is_baby=data.is_baby;
   let pokemon_description = data.flavor_text_entries;
 
   
@@ -91,7 +93,7 @@ function display_pokemon_2(data) {
   // Display Pokemon generation
   gen_element.textContent = pokemon_gen;
   description_element.textContent = find_en_description(pokemon_description);
-  set_uniqueness(is_legendary, is_mythical, uniqueness_icon, uniqueness_label);
+  set_uniqueness(is_legendary, is_mythical,is_baby, uniqueness_icon, uniqueness_label);
 }
 
 
@@ -158,20 +160,36 @@ function set_abilities(pokemon_abilities, ability_element, hidden_class, hidden_
 }
 
 // Function to set Pokemon uniqueness (common, legendary, mythical) on the UI
-function set_uniqueness(is_legendary, is_mythical, uniqueness_icon, uniqueness_label) {
+function set_uniqueness(is_legendary, is_mythical,is_baby, uniqueness_icon, uniqueness_label) {
+  const pseudo_legendary=[149,248,373,376,445,635,706,784,887,998]
+  const favorites=[258,259,260,570,571]
+
   if (is_legendary) {
     uniqueness_icon.classList = "legendary";
     uniqueness_label.textContent = "Legendary";
     uniqueness_label.style.color = "#c0e00a";
-  } else if (is_mythical) {
+  } 
+  else if (is_mythical) {
     uniqueness_icon.classList = "mythical";
     uniqueness_label.textContent = "Mythical";
     uniqueness_label.style.color = "#ff00bf";
-  } else if (id == 258 || id == 259 || id == 260||id==570||id==571) {
+  } 
+  else if (is_baby) {
+    uniqueness_icon.classList = "baby";
+    uniqueness_label.textContent = "Baby";
+    uniqueness_label.style.color = "#eb9cc4";
+  } 
+  else if(pseudo_legendary.includes(parseInt(id))){
+    uniqueness_icon.classList = "pseudo-legendary";
+    uniqueness_label.textContent = "Pseudo-legendary";
+    uniqueness_label.style.color = "#eba040";
+  }
+  else if (favorites.includes(parseInt(id))) {
     uniqueness_icon.classList = "heart";
     uniqueness_label.textContent = "Awesome";
     uniqueness_label.style.color = "#ffffff";
-  } else {
+  } 
+  else {
     uniqueness_icon.classList = "common";
     uniqueness_label.textContent = "Common";
   }
@@ -186,6 +204,10 @@ function set_sprite(img_url5,data){
   const img6=document.getElementById("s-aw")
   const img7=document.getElementById("n-3d")
   const img8=document.getElementById("s-3d")
+  const img9=document.getElementById("afd")
+  const img10=document.getElementById("abd")
+  const img11=document.getElementById("afs")
+  const img12=document.getElementById("abs")
 
   const img_url1=data.sprites.front_default
   const img_url2=data.sprites.back_default
@@ -195,13 +217,20 @@ function set_sprite(img_url5,data){
   const img_url7=data.sprites.other["home"].front_default
   const img_url8=data.sprites.other["home"].front_shiny
 
+  const img_url9=`${github_sprited_url}${id}.gif`
+  const img_url10=`${github_sprited_url}back/${id}.gif`
+  const img_url11=`${github_sprited_url}shiny/${id}.gif`
+  const img_url12=`${github_sprited_url}back/shiny/${id}.gif`
 
   
-  const arr1=[img1,img2,img3,img4,img5,img6,img7,img8]
-  const arr2=[img_url1,img_url2,img_url3,img_url4,img_url5,img_url6,img_url7,img_url8]
+  const arr1=[img1,img2,img3,img4,img5,img6,img7,img8,img9,img10,img11,img12]
+  const arr2=[img_url1,img_url2,img_url3,img_url4,img_url5,img_url6,img_url7,img_url8,img_url9,img_url10,img_url11,img_url12]
 
 
   for(let i=0;i<arr1.length;i++){
+    if(i==8){
+      arr1[i].addEventListener("error",handle_img_error)
+    }
     if(arr2[i]==null){
       arr1[i].remove()
     }
@@ -213,6 +242,12 @@ function set_sprite(img_url5,data){
 
 
 }
+function handle_img_error(){
+  animation_container=document.getElementsByClassName("sprites")[1]
+  animation_container.remove()
+}
+
+
 function set_stats(stats){
   stat_arr=[]
   for(let i=0;i<stats.length;i++){
@@ -345,7 +380,7 @@ function remove_unnecessary(str) {
   for (let i = 0; i < unnecessary.length; i++) {
     str = str.replace(unnecessary[i], "");
   }
-  return str;
+  return str.replace("Nidoran m", "Nidoran ♂").replace("Nidoran f", "Nidoran ♀").replace("fetchd","fetch'd");
 }
 
 // Function to adjust font size based on the length of the Pokemon name

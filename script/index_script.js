@@ -90,8 +90,7 @@ function remove_unnecessary(str) {
     for (let i = 0; i < unnecessary.length; i++) {
       str = str.replace(unnecessary[i], "");
     }
-    str = str.replace("Nidoran m", "Nidoran ♂").replace("Nidoran f", "Nidoran ♀");
-    return str;
+    return str.replace("Nidoran m", "Nidoran ♂").replace("Nidoran f", "Nidoran ♀").replace("fetchd","fetch'd");
   }
 
 function is_end() {
