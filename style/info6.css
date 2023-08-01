@@ -167,19 +167,21 @@
 }
 @media (max-width:470px) {
     .pokemon-box{
-        width: 47px;
-        height: 77px;
+        width: 60px;
+        height: 90px;
+        margin-left: 5px;
+        margin-right: 5px;
     }
 
     .pokemon-box h4{
         height: 14px;
-        font-size: 7px ;
+        font-size: 8px ;
     }
 
     .pokemon-box h3{
-        font-size: 8px;
+        font-size: 10px;
     }
     .arrow{
-        font-size: 40px;
+        font-size: 30px;
     }
 }
