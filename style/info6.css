@@ -167,6 +167,7 @@
 }
 @media (max-width:470px) {
     .pokemon-box{
+        padding: 3px;
         width: 70px;
         height: 105px;
         margin-left: 5px;
