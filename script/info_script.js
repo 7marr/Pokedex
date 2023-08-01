@@ -1,8 +1,8 @@
 // Get the 'id' parameter from the URL query string
 const URL = new URLSearchParams(window.location.search);
 const id = URL.get("id");
-let evolution_chain_id
 let type_num = [];
+let evolutions=[]
 
 // Base URLs for API endpoints
 const API_url_pokemon = "https://pokeapi.co/api/v2/pokemon/";
@@ -65,21 +65,21 @@ function display_pokemon_1(data) {
 // Fetch Pokemon data from API and call display_pokemon_2 to show it
 function fetching_pokemon_2() {
   fetch(API_url_pokemon_species + id)
-    .then(res => res.json())
-    .then(data => display_pokemon_2(data));
-   
+  .then(res => res.json())
+  .then(data => display_pokemon_2(data));
 }
 
 // Display Pokemon species data retrieved from API
-function display_pokemon_2(data) {
+async function display_pokemon_2(data) {
   // Extract Pokemon generation and description
   let pokemon_gen = data.generation["name"];
   const is_legendary = data.is_legendary;
   const is_mythical = data.is_mythical;
   const is_baby=data.is_baby;
   let pokemon_description = data.flavor_text_entries;
+  const evolution_chain_id=data.evolution_chain.url.replace("https://pokeapi.co/api/v2/evolution-chain/","").replace("/","")
 
-  
+
   // Converting roman numerals to base-10 numerals
   pokemon_gen = roman_to_num(pokemon_gen);
 
@@ -88,18 +88,186 @@ function display_pokemon_2(data) {
   const description_element = document.getElementsByClassName("entry")[0];
   const uniqueness_icon = document.getElementById("uniqueness");
   const uniqueness_label = document.getElementsByClassName("uniqueness")[0];
+  
+  const evolution_container=document.getElementsByClassName("n6")[0]
+  const first_stage=document.getElementById("first")
+  const second_stage=document.getElementById("second")
+  const last_stage=document.getElementById("last")
+  const first_arrow=document.getElementsByClassName("arrow")[0]
+  const second_arrow=document.getElementsByClassName("arrow")[1]
 
 
   // Display Pokemon generation
-  gen_element.textContent = pokemon_gen;
   description_element.textContent = find_en_description(pokemon_description);
+  gen_element.textContent = pokemon_gen;
   set_uniqueness(is_legendary, is_mythical,is_baby, uniqueness_icon, uniqueness_label);
+  await fetching_evolution_chain(evolution_chain_id)
+
+  if(evolutions.length==1){
+    handle_1_evo(evolution_container,first_stage,second_stage,last_stage,first_arrow,second_arrow)
+  }
+  else if(evolutions.length==2){
+    handle_2_evo(evolution_container,first_stage,second_stage,last_stage,first_arrow,second_arrow)
+
+  }
+  else if(evolutions.length==3){
+  handle_3_evo(evolution_container,first_stage,second_stage,last_stage,first_arrow,second_arrow)
+
+  } 
+
+
+}
+async function handle_1_evo(evolution_container,first_stage,second_stage,last_stage,first_arrow,second_arrow){
+  await fetch_evolution_pokemon(first_stage,evolutions[0])
+  second_stage.remove()
+  last_stage.remove()
+  first_arrow.remove()
+  second_arrow.remove()
+  first_stage.innerHTML+="This Pokemon doesn't evolve"
+}
+async function handle_2_evo(evolution_container,first_stage,second_stage,last_stage,first_arrow,second_arrow){
+
+  await fetch_evolution_pokemon(first_stage,evolutions[0])
+  
+  // if there is a single second evolution
+  if(!Array.isArray(evolutions[1])){
+    fetch_evolution_pokemon(second_stage,evolutions[1])
+    last_stage.remove()
+    second_arrow.remove()
+  }
+  // if there is 2 possible second evolutions
+  else if(Array.isArray(evolutions[1])&&evolutions[1].length==2){
+    first_stage.innerHTML=""
+    fetch_evolution_pokemon(second_stage,evolutions[0])
+    fetch_evolution_pokemon(first_stage,evolutions[1][0])
+    fetch_evolution_pokemon(last_stage,evolutions[1][1])
+    first_arrow.innerHTML="&larr;"
+  }
+  //if there is 3 possible second evolutions
+  else if(Array.isArray(evolutions[1])&&evolutions[1].length==3){
+    const pokemon_box=document.getElementsByClassName("pokemon-box")
+    first_arrow.innerHTML="&rarr;"
+    second_stage.style.flexDirection="row"
+    last_stage.remove()
+    second_arrow.remove()
+    for(let i=0;i<evolutions[1].length;i++){
+      await fetch_evolution_pokemon(second_stage,evolutions[1][i])
+
+    }
+  }
+}
+async function handle_3_evo(evolution_container,first_stage,second_stage,last_stage,first_arrow,second_arrow){
+  await fetch_evolution_pokemon(first_stage,evolutions[0])
+  // if there is 2 possible last and second evolutions
+  if(Array.isArray(evolutions[1])){
+    for(let i=0;i<evolutions[1].length;i++){
+    await fetch_evolution_pokemon(second_stage,evolutions[1][i])
+    await fetch_evolution_pokemon(last_stage,evolutions[2][i])
+  }
+  }
+  // if there is 2 possible last evolution
+  else if (Array.isArray(evolutions[2])){
+    await fetch_evolution_pokemon(second_stage,evolutions[1])
+    for(let i=0;i<evolutions[1].length;i++){
+      await fetch_evolution_pokemon(last_stage,evolutions[2][i])
+    }
+  }
+  // if there is a single second and last evolutions
+  else{
+    await fetch_evolution_pokemon(second_stage,evolutions[1])
+    await fetch_evolution_pokemon(last_stage,evolutions[2])
+  }
 }
 
 
+async function fetch_evolution_pokemon(stage,id){
+  await fetch(API_url_pokemon+id)
+  .then(res=>res.json())
+  .then(data=>create_pokemon_box(data,stage))
+}
+
+function create_pokemon_box(data,stage){
+  const pokemon_name = data.name;
+  const pokemon_image = data.sprites.other["official-artwork"].front_default;
+  const pokemon_id = data.id;
+
+  const pokemon_box = document.createElement("div");
+  pokemon_box.classList.add("pokemon-box");
+
+  const name_element = document.createElement("h4");
+  const image_element = document.createElement("img");
+  const id_element = document.createElement("h3");
+
+  name_element.textContent = remove_unnecessary(capitalize(pokemon_name));
+  image_element.src = pokemon_image;
+  id_element.textContent = "#" + pokemon_id;
+
+  pokemon_box.appendChild(name_element);
+  pokemon_box.appendChild(image_element);
+  pokemon_box.appendChild(id_element);
+  pokemon_box.addEventListener("click", function() {
+      window.location.href = "info.html?id=" + pokemon_id;
+  });
+
+  stage.appendChild(pokemon_box);
+
+}
+
+async function fetching_evolution_chain(evolution_chain_id){
+  await fetch(API_url_evolution_chain+evolution_chain_id)
+  .then(res=>res.json())
+  .then(data=>get_them_ids(data))
+}
 
 
+function get_them_ids(data){
+  let temp=get_evolution(data.chain.evolves_to)
+  let another_temp=[]
+  let is_there_second=false
 
+  
+  evolutions.push(extract_id(data.chain.species.url))
+  if(temp!=null){
+    evolutions.push(temp)
+    is_there_second=true
+  }
+  if(is_there_second){
+    if(Array.isArray(evolutions[1])){
+      for(let i=0;i<evolutions[1].length;i++){
+        if(get_evolution(data.chain.evolves_to[i].evolves_to)!=null){
+          another_temp.push(get_evolution(data.chain.evolves_to[i].evolves_to))
+        }
+      }
+      if(another_temp.length!=0){
+        evolutions.push(another_temp)
+      }
+    }
+    else{
+      if(get_evolution(data.chain.evolves_to[0].evolves_to)!=null)
+      evolutions.push(get_evolution(data.chain.evolves_to[0].evolves_to))
+    }
+  }
+  
+}
+
+function get_evolution(path){
+  if(path.length==0){
+    return null
+  }
+  else if(path.length==1){
+    return extract_id(path[0].species.url)
+  }
+  else if(path.length>1){
+    let temp=[]
+    for(let i=0;i<path.length;i++){
+      temp.push(extract_id(path[i].species.url))
+    }
+    return temp
+  }
+}
+function extract_id(url){
+  return url.replace(API_url_pokemon_species,"").replace("/","")
+}
 
 
 // Function to get an array of Pokemon types
@@ -162,7 +330,7 @@ function set_abilities(pokemon_abilities, ability_element, hidden_class, hidden_
 // Function to set Pokemon uniqueness (common, legendary, mythical) on the UI
 function set_uniqueness(is_legendary, is_mythical,is_baby, uniqueness_icon, uniqueness_label) {
   const pseudo_legendary=[149,248,373,376,445,635,706,784,887,998]
-  const favorites=[258,259,260,570,571]
+  const favorites=[258,259,260,359,570,571]
 
   if (is_legendary) {
     uniqueness_icon.classList = "legendary";
@@ -344,18 +512,22 @@ function display_damage(thing,len){
 }
 
 
-
-
 // Function to find and return English description from the available descriptions
 function find_en_description(description) {
-  for (let i = 0; i < description.length; i++) {
-    if (description[i]["language"]["name"] === "en") {
-      description = description[i]["flavor_text"];
-      break;
+  try{
+    for (let i = 0; i < description.length; i++) {
+      if (description[i]["language"]["name"] === "en") {
+        description = description[i]["flavor_text"];
+        break;
+      }
     }
+    description = description.replaceAll("", " ");
+    return description;
   }
-  description = description.replaceAll("", " ");
-  return description;
+  catch{
+    console.log("stupid error")
+  }
+
 }
 
 
