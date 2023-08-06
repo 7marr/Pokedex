@@ -4,26 +4,32 @@ const not_loading=document.getElementById("aaa")
 const loading=document.getElementsByClassName("loading")[0]
 const container = document.getElementsByClassName("container")[0];
 
+// API url
+const url = "https://pokeapi.co/api/v2/pokemon/";
+const mega_url= "https://raw.githubusercontent.com/7marr/Pokedex/main/script/json/mega%20evolution/mega.json";
+
+
+
 
 // Variables
 let startpoint = 1;
 let endpoint = 120;
 let start_steps=120
 let end_steps=120
+let mega_data
+let mega_index=0
 
-
-
-
-
-
-
-
-
+async function fetching_megaData(callback){
+    await fetch(mega_url)
+    .then(res=>res.json())
+    .then(data=>mega_data=data)
+    callback()
+}
 // Main functions
 async function fetching_pokemon() {
     is_end();
 
-    const url = "https://pokeapi.co/api/v2/pokemon/";
+
 
     loading.style.display="flex"
     not_loading.style.display="none"
@@ -31,7 +37,35 @@ async function fetching_pokemon() {
     for (let i = startpoint; i <= endpoint; i++) {
         await fetch(url + i)
         .then(res=>res.json())
-        .then(data=>display_pokemon(data))
+        .then(data=>display_pokemon(data,false))
+        try{
+            if(mega_index<mega_data.length){
+                if (i==mega_data[mega_index].id){
+                    let j=0
+                    if(i==6||i==150){
+                        j=2
+                    }
+                    else{
+                        j=1
+                    }
+                    for(let i=0;i<j;i++){
+                        await fetch(url+mega_data[mega_index].api_id)
+                        .then(res=>res.json())
+                        .then(data=>{
+                            data.name=data.name.replace("-mega","").replace("-x"," X").replace("-y"," Y")
+                            data.id=mega_data[mega_index].id
+                            display_pokemon(data,mega_data[mega_index].api_id)})
+                        mega_index++
+                    }
+        
+                }
+            }
+        }
+        catch{
+            location.reload()
+        }
+
+
     }
 
 
@@ -39,13 +73,16 @@ async function fetching_pokemon() {
     not_loading.style.display="flex"
 }
 
-function display_pokemon(data) {
+function display_pokemon(data,mega) {
     const pokemon_name = data.name;
     const pokemon_image = data.sprites.other["official-artwork"].front_default;
     const pokemon_id = data.id;
 
     const pokemon_box = document.createElement("div");
     pokemon_box.classList.add("pokemon-box");
+    if(mega){
+        pokemon_box.classList.add("mega-box")
+    }
 
     const name_element = document.createElement("h4");
     const image_element = document.createElement("img");
@@ -59,11 +96,15 @@ function display_pokemon(data) {
     pokemon_box.appendChild(image_element);
     pokemon_box.appendChild(id_element);
     pokemon_box.addEventListener("click", function() {
-        window.location.href = "info.html?id=" + pokemon_id;
+        if(mega){
+            window.location.href = "info.html?id=" + mega;  
+        }
+        else{
+            window.location.href = "info.html?id=" + pokemon_id;
+        }
     });
 
-    container.appendChild(pokemon_box);
-    
+    container.appendChild(pokemon_box); 
 }
 
 function load_more_pokemon() {
@@ -109,4 +150,5 @@ loading_button.onclick = load_more_pokemon;
 loading_image.onclick = load_more_pokemon;
 
 // Initial fetching of Pokemon data
-fetching_pokemon();
+
+fetching_megaData(fetching_pokemon)

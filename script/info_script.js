@@ -1,8 +1,12 @@
+
 // Get the 'id' parameter from the URL query string
 const URL = new URLSearchParams(window.location.search);
 const id = URL.get("id");
+
+let mega_id
 let type_num = [];
 let evolutions=[]
+let mega_data
 
 // Base URLs for API endpoints
 const API_url_pokemon = "https://pokeapi.co/api/v2/pokemon/";
@@ -10,9 +14,27 @@ const API_url_pokemon_species = "https://pokeapi.co/api/v2/pokemon-species/";
 const API_url_evolution_chain="https://pokeapi.co/api/v2/evolution-chain/"
 const github_types_url="https://raw.githubusercontent.com/7marr/Pokedex/main/script/json/types/"
 const github_sprited_url="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/"//ex : back/shiny/637.gif 
+const mega_url= "https://raw.githubusercontent.com/7marr/Pokedex/main/script/json/mega%20evolution/mega.json";
+const evolution_container=document.getElementsByClassName("evolution-container")[0]
+
 /* --------- Fetching and Displaying Pokemon Data Group --------- */
 
+
+async function fetching_megaData(callback){
+  await fetch(mega_url)
+  .then(res=>res.json())
+  .then(data=>mega_data=data)
+  for(let i=0;i<mega_data.length;i++){
+    if(mega_data[i].api_id===id){
+      mega_id=mega_data[i].id
+      break
+    }
+  }
+  fetching_pokemon_1()
+  callback()
+}
 // Fetch Pokemon data from API and call display_pokemon_1 to show it
+
 function fetching_pokemon_1() {
   fetch(API_url_pokemon + id)
     .then(res => res.json())
@@ -22,7 +44,11 @@ function fetching_pokemon_1() {
 // Display Pokemon data retrieved from API
 function display_pokemon_1(data) {
   // Extract Pokemon data
-  const pokemon_id = id_format(data.id);
+  let pokemon_id = id_format(data.id);
+  if(id.length>4){
+    pokemon_id=id_format(mega_id)
+  }
+
   const pokemon_name = remove_unnecessary(capitalize(data.name));
   const pokemon_image = data.sprites.other["official-artwork"].front_default;
   const pokemon_height = data.height;
@@ -46,6 +72,7 @@ function display_pokemon_1(data) {
   name_element.textContent = pokemon_name;
   image_element.src = pokemon_image;
 
+  // Display height and weight
   if (pokemon_height >= 10) {
     height_element.textContent = pokemon_height / 10 + " m";
   } else {
@@ -64,7 +91,14 @@ function display_pokemon_1(data) {
 
 // Fetch Pokemon data from API and call display_pokemon_2 to show it
 function fetching_pokemon_2() {
-  fetch(API_url_pokemon_species + id)
+  let correct_id
+  if(id.length>4){
+    correct_id=mega_id
+  }
+  else{
+    correct_id=id
+  }
+  fetch(API_url_pokemon_species + correct_id)
   .then(res => res.json())
   .then(data => display_pokemon_2(data));
 }
@@ -88,188 +122,26 @@ async function display_pokemon_2(data) {
   const description_element = document.getElementsByClassName("entry")[0];
   const uniqueness_icon = document.getElementById("uniqueness");
   const uniqueness_label = document.getElementsByClassName("uniqueness")[0];
-  
-  const evolution_container=document.getElementsByClassName("n6")[0]
-  const first_stage=document.getElementById("first")
-  const second_stage=document.getElementById("second")
-  const last_stage=document.getElementById("last")
-  const first_arrow=document.getElementsByClassName("arrow")[0]
-  const second_arrow=document.getElementsByClassName("arrow")[1]
 
 
   // Display Pokemon generation
   description_element.textContent = find_en_description(pokemon_description);
   gen_element.textContent = pokemon_gen;
   set_uniqueness(is_legendary, is_mythical,is_baby, uniqueness_icon, uniqueness_label);
+  /*
   await fetching_evolution_chain(evolution_chain_id)
 
   if(evolutions.length==1){
-    handle_1_evo(evolution_container,first_stage,second_stage,last_stage,first_arrow,second_arrow)
-  }
+    handle_1_evo()  }
   else if(evolutions.length==2){
-    handle_2_evo(evolution_container,first_stage,second_stage,last_stage,first_arrow,second_arrow)
-
+    handle_2_evo()
   }
   else if(evolutions.length==3){
-  handle_3_evo(evolution_container,first_stage,second_stage,last_stage,first_arrow,second_arrow)
-
+    handle_3_evo()
   } 
 
-
+*/
 }
-async function handle_1_evo(evolution_container,first_stage,second_stage,last_stage,first_arrow,second_arrow){
-  await fetch_evolution_pokemon(first_stage,evolutions[0])
-  second_stage.remove()
-  last_stage.remove()
-  first_arrow.remove()
-  second_arrow.remove()
-  first_stage.innerHTML+="This Pokemon doesn't evolve"
-}
-async function handle_2_evo(evolution_container,first_stage,second_stage,last_stage,first_arrow,second_arrow){
-
-  await fetch_evolution_pokemon(first_stage,evolutions[0])
-  
-  // if there is a single second evolution
-  if(!Array.isArray(evolutions[1])){
-    fetch_evolution_pokemon(second_stage,evolutions[1])
-    last_stage.remove()
-    second_arrow.remove()
-  }
-  // if there is 2 possible second evolutions
-  else if(Array.isArray(evolutions[1])&&evolutions[1].length==2){
-    first_stage.innerHTML=""
-    fetch_evolution_pokemon(second_stage,evolutions[0])
-    fetch_evolution_pokemon(first_stage,evolutions[1][0])
-    fetch_evolution_pokemon(last_stage,evolutions[1][1])
-    first_arrow.innerHTML="&larr;"
-  }
-  //if there is 3 possible second evolutions
-  else if(Array.isArray(evolutions[1])&&evolutions[1].length==3){
-    const pokemon_box=document.getElementsByClassName("pokemon-box")
-    first_arrow.innerHTML="&rarr;"
-    second_stage.style.flexDirection="row"
-    last_stage.remove()
-    second_arrow.remove()
-    for(let i=0;i<evolutions[1].length;i++){
-      await fetch_evolution_pokemon(second_stage,evolutions[1][i])
-
-    }
-  }
-}
-async function handle_3_evo(evolution_container,first_stage,second_stage,last_stage,first_arrow,second_arrow){
-  await fetch_evolution_pokemon(first_stage,evolutions[0])
-  // if there is 2 possible last and second evolutions
-  if(Array.isArray(evolutions[1])){
-    for(let i=0;i<evolutions[1].length;i++){
-    await fetch_evolution_pokemon(second_stage,evolutions[1][i])
-    await fetch_evolution_pokemon(last_stage,evolutions[2][i])
-  }
-  }
-  // if there is 2 possible last evolution
-  else if (Array.isArray(evolutions[2])){
-    await fetch_evolution_pokemon(second_stage,evolutions[1])
-    for(let i=0;i<evolutions[1].length;i++){
-      await fetch_evolution_pokemon(last_stage,evolutions[2][i])
-    }
-  }
-  // if there is a single second and last evolutions
-  else{
-    await fetch_evolution_pokemon(second_stage,evolutions[1])
-    await fetch_evolution_pokemon(last_stage,evolutions[2])
-  }
-}
-
-
-async function fetch_evolution_pokemon(stage,id){
-  await fetch(API_url_pokemon+id)
-  .then(res=>res.json())
-  .then(data=>create_pokemon_box(data,stage))
-}
-
-function create_pokemon_box(data,stage){
-  const pokemon_name = data.name;
-  const pokemon_image = data.sprites.other["official-artwork"].front_default;
-  const pokemon_id = data.id;
-
-  const pokemon_box = document.createElement("div");
-  pokemon_box.classList.add("pokemon-box");
-
-  const name_element = document.createElement("h4");
-  const image_element = document.createElement("img");
-  const id_element = document.createElement("h3");
-
-  name_element.textContent = remove_unnecessary(capitalize(pokemon_name));
-  image_element.src = pokemon_image;
-  id_element.textContent = "#" + pokemon_id;
-
-  pokemon_box.appendChild(name_element);
-  pokemon_box.appendChild(image_element);
-  pokemon_box.appendChild(id_element);
-  pokemon_box.addEventListener("click", function() {
-      window.location.href = "info.html?id=" + pokemon_id;
-  });
-
-  stage.appendChild(pokemon_box);
-
-}
-
-async function fetching_evolution_chain(evolution_chain_id){
-  await fetch(API_url_evolution_chain+evolution_chain_id)
-  .then(res=>res.json())
-  .then(data=>get_them_ids(data))
-}
-
-
-function get_them_ids(data){
-  let temp=get_evolution(data.chain.evolves_to)
-  let another_temp=[]
-  let is_there_second=false
-
-  
-  evolutions.push(extract_id(data.chain.species.url))
-  if(temp!=null){
-    evolutions.push(temp)
-    is_there_second=true
-  }
-  if(is_there_second){
-    if(Array.isArray(evolutions[1])){
-      for(let i=0;i<evolutions[1].length;i++){
-        if(get_evolution(data.chain.evolves_to[i].evolves_to)!=null){
-          another_temp.push(get_evolution(data.chain.evolves_to[i].evolves_to))
-        }
-      }
-      if(another_temp.length!=0){
-        evolutions.push(another_temp)
-      }
-    }
-    else{
-      if(get_evolution(data.chain.evolves_to[0].evolves_to)!=null)
-      evolutions.push(get_evolution(data.chain.evolves_to[0].evolves_to))
-    }
-  }
-  
-}
-
-function get_evolution(path){
-  if(path.length==0){
-    return null
-  }
-  else if(path.length==1){
-    return extract_id(path[0].species.url)
-  }
-  else if(path.length>1){
-    let temp=[]
-    for(let i=0;i<path.length;i++){
-      temp.push(extract_id(path[i].species.url))
-    }
-    return temp
-  }
-}
-function extract_id(url){
-  return url.replace(API_url_pokemon_species,"").replace("/","")
-}
-
-
 // Function to get an array of Pokemon types
 function get_types(arr) {
   type_num = arr.length;
@@ -327,11 +199,12 @@ function set_abilities(pokemon_abilities, ability_element, hidden_class, hidden_
 
 }
 
-// Function to set Pokemon uniqueness (common, legendary, mythical) on the UI
 function set_uniqueness(is_legendary, is_mythical,is_baby, uniqueness_icon, uniqueness_label) {
-  const pseudo_legendary=[149,248,373,376,445,635,706,784,887,998]
   const favorites=[258,259,260,359,570,571]
-
+  const paradox=[984,985,986,987,988,989,990,991,992,993,994,995,1005,1006,1009,1010]
+  const fossil=[138,139,140,141,142,345,346,347,348,408,409,410,411,564,565,566,567,696,697,698,699,880,881,882,883]
+  const ultra_beast=[793,794,795,796,797,798,799,803,804,805,806]
+  const starter=[1,4,7,152,155,158,252,255,258,387,390,393,495,498,501,650,653,656,722,725,728,810,813,816,906,909,912]
   if (is_legendary) {
     uniqueness_icon.classList = "legendary";
     uniqueness_label.textContent = "Legendary";
@@ -347,16 +220,42 @@ function set_uniqueness(is_legendary, is_mythical,is_baby, uniqueness_icon, uniq
     uniqueness_label.textContent = "Baby";
     uniqueness_label.style.color = "#eb9cc4";
   } 
-  else if(pseudo_legendary.includes(parseInt(id))){
-    uniqueness_icon.classList = "pseudo-legendary";
-    uniqueness_label.textContent = "Pseudo-legendary";
-    uniqueness_label.style.color = "#eba040";
-  }
   else if (favorites.includes(parseInt(id))) {
     uniqueness_icon.classList = "heart";
     uniqueness_label.textContent = "Awesome";
     uniqueness_label.style.color = "#ffffff";
   } 
+  else if (ultra_beast.includes(parseInt(id))) {
+    uniqueness_icon.classList = "ultra-beast";
+    uniqueness_label.textContent = "Ultra Beast";
+    uniqueness_label.style.color = "#33ff00";
+  }
+  else if (starter.includes(parseInt(id))) {
+    uniqueness_icon.classList = "starter";
+    uniqueness_label.textContent = "Starter";
+    uniqueness_label.style.color = "#d6e0ff";
+  }
+  else if (fossil.includes(parseInt(id))) {
+    uniqueness_icon.classList = "fossil";
+    uniqueness_label.textContent = "Fossil";
+    uniqueness_label.style.color = "#a87b27";
+  }
+  else if (starter.includes(parseInt(id))) {
+    uniqueness_icon.classList = "starter";
+    uniqueness_label.textContent = "Starter";
+    uniqueness_label.style.color = "#d6e0ff";
+  }
+  else if (paradox.includes(parseInt(id))) {
+    uniqueness_icon.classList = "paradox";
+    uniqueness_label.textContent = "Paradox";
+    uniqueness_label.style.color = "#750381";
+  }
+  else if (id.length>4) {
+    uniqueness_icon.classList = "mega";
+    uniqueness_label.textContent = "Mega";
+    uniqueness_label.style.color = "#80d1af";
+  }
+  // Common
   else {
     uniqueness_icon.classList = "common";
     uniqueness_label.textContent = "Common";
@@ -410,11 +309,11 @@ function set_sprite(img_url5,data){
 
 
 }
+
 function handle_img_error(){
   animation_container=document.getElementsByClassName("sprites")[1]
   animation_container.remove()
 }
-
 
 function set_stats(stats){
   stat_arr=[]
@@ -451,6 +350,7 @@ async function fetch_damage(types){
     calc_damage(data)
   }
 }
+
 function calc_damage(data){
   let calculated_data=data[0]
 
@@ -459,6 +359,7 @@ function calc_damage(data){
   }
   set_damage(calculated_data)
 }
+
 function set_damage(data){
   let weaknesses=[]
   let resistences=[]
@@ -511,8 +412,6 @@ function display_damage(thing,len){
   return a_type
 }
 
-
-// Function to find and return English description from the available descriptions
 function find_en_description(description) {
   try{
     for (let i = 0; i < description.length; i++) {
@@ -526,57 +425,45 @@ function find_en_description(description) {
   }
   catch{
     console.log("stupid error")
+    return "No Pokedex entry was provided"
   }
 
 }
 
 
-
-
-
-
-
-
-
-
-// Function to format Pokemon ID with leading zeros
 function id_format(id) {
   id = String(id).padStart(4, "0");
   return "#" + id;
 }
 
-// Function to remove unnecessary words from the Pokemon name
 function remove_unnecessary(str) {
-  let unnecessary = [" baile", " male", " normal"," red meteor", " plant", " altered", " land", " red striped", " standard", " incarnate", " ordinary", " aria", " shield", " average", " 50", " midday", " solo", " disguised", " amped", " ice", " full belly", " single strike"];
+  let unnecessary = [" baile", " male"," mega", " normal"," red meteor", " plant", " altered", " land", " red striped", " standard", " incarnate", " ordinary", " aria", " shield", " average", " 50", " midday", " solo", " disguised", " amped", " ice", " full belly", " single strike"];
   str = str.replaceAll("-", " ");
   for (let i = 0; i < unnecessary.length; i++) {
     str = str.replace(unnecessary[i], "");
   }
-  return str.replace("Nidoran m", "Nidoran ♂").replace("Nidoran f", "Nidoran ♀").replace("fetchd","fetch'd");
+  return str.replace(" y", " Y").replace(" x", " X").replace("Nidoran m", "Nidoran ♂").replace("Nidoran f", "Nidoran ♀").replace("fetchd","fetch'd");
 }
 
-// Function to adjust font size based on the length of the Pokemon name
 function name_size(pokemon_name, name_element) {
   if (pokemon_name.length > 10) {
     name_element.style.fontSize = "50px";
   }
 }
 
-// Function to capitalize the first letter of a string
 function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-// Function to format abilities text with slashes and replace hyphens with spaces
 function ability_format(txt, pokemon_abilities) {
   if (pokemon_abilities[0].length == 2) {
     txt = txt.replace(" ", " / ");
   }
-  txt = txt.replace(/-/g, " ");
+  txt = txt.replaceAll("-", " ");
   return txt;
 }
 
-// Function to convert roman numerals to base-10 numerals
+
 function roman_to_num(str) {
   str = str.replace("generation-", "");
   const numerals = {
@@ -593,9 +480,233 @@ function roman_to_num(str) {
   return numerals[str];
 }
 
-// Fetch and display Pokemon data from API
 
 
 
-fetching_pokemon_1()
-fetching_pokemon_2()
+
+
+fetching_megaData(fetching_pokemon_2)
+
+
+
+/*
+async function handle_1_evo(){
+  await fetch_evolution_pokemon(evolutions[0],evolution_container)
+  evolution_container.innerHTML+="This Pokemon doesn't evolve"
+  evolution_container.style.fontSize="18px"
+  evolution_container.style.flexDirection="column"
+  document.getElementsByClassName("pokemon-box")[0].style.width="30%"
+}
+async function handle_2_evo(){
+
+  await fetch_evolution_pokemon(evolutions[0],evolution_container)
+  
+  // if there is a single second evolution
+  if(!Array.isArray(evolutions[1])){
+    evolution_container.innerHTML+="&rarr;"
+    await fetch_evolution_pokemon(evolutions[1],evolution_container)
+    for(let i=0 ;i<2;i++){
+      document.getElementsByClassName("pokemon-box")[i].style.width="30%"
+    }
+  }
+  // if there is 2 possible second evolutions
+  else if(Array.isArray(evolutions[1])&&evolutions[1].length==2){
+    evolution_container.innerHTML=""
+    await fetch_evolution_pokemon(evolutions[1][0],evolution_container)
+    evolution_container.innerHTML+="&larr;"
+    await fetch_evolution_pokemon(evolutions[0],evolution_container)
+    evolution_container.innerHTML+="&rarr;"
+    await fetch_evolution_pokemon(evolutions[1][1],evolution_container)
+  }
+  //if there is 3 possible second evolutions
+  else if(Array.isArray(evolutions[1])&&evolutions[1].length==3){
+    const pokemon_box=document.getElementsByClassName("pokemon-box")
+    const column=document.createElement("div")
+    column.classList="column"
+    const arrows=document.createElement("div")
+    arrows.classList="arrow"    
+    const arrow1=document.createElement("div")
+    arrow1.innerHTML="&nearr;"
+    const arrow2=document.createElement("div")
+    arrow2.innerHTML="&rarr;"
+    const arrow3=document.createElement("div")
+    arrow3.innerHTML="&searr;"
+    arrows.append(arrow1,arrow2,arrow3)
+    for(let i=0;i<evolutions[1].length;i++){
+      await fetch_evolution_pokemon(evolutions[1][i],column)
+    }
+    evolution_container.append(arrows)
+    evolution_container.append(column)
+    for(let i=0;i<evolutions[1].length;i++){
+      pokemon_box[i+1].style.width="100%"
+    }
+  }
+}
+async function handle_3_evo(){
+  await fetch_evolution_pokemon(evolutions[0],evolution_container)
+  // if there is 2 possible last and second evolutions
+  if(Array.isArray(evolutions[1])){
+    const pokemon_box=document.getElementsByClassName("pokemon-box")
+    const column1=document.createElement("div")
+    column1.classList="column"
+    const column2=document.createElement("div")
+    column2.classList="column"
+
+    const arrows1=document.createElement("div")
+    arrows1.classList="arrow"   
+    const arrows2=document.createElement("div")
+    arrows2.classList="arrow"
+
+    const arrow1=document.createElement("div")
+    arrow1.innerHTML="&nearr;"
+    const arrow2=document.createElement("div")
+    arrow2.innerHTML="&searr;"
+
+    const arrow3 = document.createElement("div"); 
+    arrow3.innerHTML = "&rarr;";
+    const arrow4 = document.createElement("div");
+    arrow4.innerHTML = "&rarr;";
+    arrows1.append(arrow1,arrow2)
+    arrows2.append(arrow3,arrow4)
+    column2.style.justifyContent="space-evenly"
+    for(let i=0;i<evolutions[1].length;i++){
+      await fetch_evolution_pokemon(evolutions[1][i],column1)
+      await fetch_evolution_pokemon(evolutions[2][i],column2)
+    }
+  evolution_container.append(arrows1,column1,arrows2,column2)
+  for(let i=0;i<2;i++){
+    pokemon_box[i+1].style.width="100%"
+    pokemon_box[i+3].style.width="100%"
+  }
+  arrow3.style.marginLeft="20px"
+  arrow4.style.marginLeft="20px"
+  }
+  // if there is 2 possible last evolution
+  else if (Array.isArray(evolutions[2])){
+    evolution_container.innerHTML+="&rarr;"
+    
+    const column=document.createElement("div")
+    column.classList="column"
+    const arrows=document.createElement("div")
+    arrows.classList="arrow"    
+    const arrow1=document.createElement("div")
+    arrow1.innerHTML="&nearr;"
+    const arrow2=document.createElement("div")
+    arrow2.innerHTML="&searr;"
+    arrows.append(arrow1,arrow2)
+    await fetch_evolution_pokemon(evolutions[1],evolution_container)
+    evolution_container.append(arrows)
+    for(let i=0;i<evolutions[2].length;i++){
+      await fetch_evolution_pokemon(evolutions[2][i],column)
+    }
+    evolution_container.append(column)
+    for(let i=2;i<4;i++){
+      document.getElementsByClassName("pokemon-box")[i].style.width="95%"
+
+    }
+    arrows.style.fontSize="30px"
+    evolution_container.style.fontSize="30px"
+    
+
+  }
+  // if there is a single second and last evolutions
+  else{
+    evolution_container.innerHTML+="&rarr;"
+    await fetch_evolution_pokemon(evolutions[1],evolution_container)
+    evolution_container.innerHTML+="&rarr;"
+    await fetch_evolution_pokemon(evolutions[2],evolution_container)
+  }
+}
+
+
+async function fetch_evolution_pokemon(id,container){
+  console.log(id)
+  await fetch(API_url_pokemon+id)
+  .then(res=>res.json())
+  .then(data=>create_pokemon_box(data,container))
+}
+
+function create_pokemon_box(data,container){
+  const pokemon_name = data.name;
+  const pokemon_image = data.sprites.other["official-artwork"].front_default;
+  const pokemon_id = data.id;
+
+  const pokemon_box = document.createElement("div");
+  pokemon_box.classList.add("pokemon-box");
+
+  const name_element = document.createElement("h4");
+  const image_element = document.createElement("img");
+  const id_element = document.createElement("h3");
+
+  name_element.textContent = remove_unnecessary(capitalize(pokemon_name));
+  image_element.src = pokemon_image;
+  id_element.textContent = "#" + pokemon_id;
+
+  pokemon_box.appendChild(name_element);
+  pokemon_box.appendChild(image_element);
+  pokemon_box.appendChild(id_element);
+  pokemon_box.addEventListener("click", function() {
+      window.location.href = "info.html?id=" + pokemon_id;
+  });
+
+  container.append(pokemon_box);
+
+}
+
+async function fetching_evolution_chain(evolution_chain_id){
+  await fetch(API_url_evolution_chain+evolution_chain_id)
+  .then(res=>res.json())
+  .then(data=>get_them_ids(data))
+}
+
+
+function get_them_ids(data){
+  let temp=get_evolution(data.chain.evolves_to)
+  let another_temp=[]
+  let is_there_second=false
+
+  
+  evolutions.push(extract_id(data.chain.species.url))
+  if(temp!=null){
+    evolutions.push(temp)
+    is_there_second=true
+  }
+  if(is_there_second){
+    if(Array.isArray(evolutions[1])){
+      for(let i=0;i<evolutions[1].length;i++){
+        if(get_evolution(data.chain.evolves_to[i].evolves_to)!=null){
+          another_temp.push(get_evolution(data.chain.evolves_to[i].evolves_to))
+        }
+      }
+      if(another_temp.length!=0){
+        evolutions.push(another_temp)
+      }
+    }
+    else{
+      if(get_evolution(data.chain.evolves_to[0].evolves_to)!=null)
+      evolutions.push(get_evolution(data.chain.evolves_to[0].evolves_to))
+    }
+  }
+  
+}
+
+function get_evolution(path){
+  if(path.length==0){
+    return null
+  }
+  else if(path.length==1){
+    return extract_id(path[0].species.url)
+  }
+  else if(path.length>1){
+    let temp=[]
+    for(let i=0;i<path.length;i++){
+      temp.push(extract_id(path[i].species.url))
+    }
+    return temp
+  }
+}
+
+function extract_id(url){
+  return url.replace(API_url_pokemon_species,"").replace("/","")
+}
+ */

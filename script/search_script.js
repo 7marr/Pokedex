@@ -4,7 +4,7 @@ const affirmative = document.getElementById("aff");
 const negative=document.getElementById("neg");
 const loading = document.getElementsByClassName("loading")[0];
 const search_box = document.getElementsByClassName("search-box")[0];
-
+const return_button=document.getElementsByClassName("go-back")[0]
 // Constants and URLs
 const max_pokemons = 1010;
 const json_url = "https://raw.githubusercontent.com/7marr/Pokedex/main/script/json/search/";
@@ -59,6 +59,9 @@ search_box.addEventListener("input", event => {
     }
     });
 
+return_button.addEventListener("click",event=>{
+    window.location.href = "index.html"
+})
 
 // Function to fetch JSON data
 async function fetch_json() {
@@ -75,8 +78,6 @@ async function fetch_json() {
         fetch_json()
     }
 }
-
-
 // Function to determine search type (by ID or by name) and call search function
 
 function filter() {

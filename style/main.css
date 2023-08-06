@@ -24,6 +24,11 @@
     z-index: 50;
 
 }
+.mega-box{
+    background:linear-gradient(0deg,#643e698e,#3728508e,#3a2f588e,#2f33588e);
+    border: 1px solid #331a3fb9;
+    box-shadow: 0px 0px 30px #15111ab9;
+}
 @media (max-width:450px) {
     .pokemon-box{
         width: 200px;

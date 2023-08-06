@@ -1,37 +1,4 @@
 
-.search-box{
-    width: 40%;
-    height: 70%;
-    box-sizing: border-box;
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px;
-    padding: 10px;
-    font-size: 18px;
-    background-color: #3d405aee;
-    border-width: 0;
-    margin-left: auto;
-    margin-top: auto;
-    margin-bottom: auto;
-    outline: none;
-    color: #cecece;
-}
-#search{
-    width: 45px;
-    height: 70%;
-    box-sizing: border-box;
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
-    padding: 10px;
-    background-color: #373a50d7;
-    border-width: 0;
-    margin-right: auto;
-    margin-top: auto;
-    margin-bottom: auto;
-    outline: none;
-    
-
-}
-
 #aff{
     display: flex;
     justify-content: center;
@@ -70,18 +37,14 @@
     outline: 3px dashed #553b3b;
 
 }
-
-@media (max-width:450px) {
+@media (max-width:570px) {
     .logo{
         display: none;
     }
+}
+@media (max-width:450px) {
     .info{
         display: none;
-    }
-    .search-box{
-        width: 70%;
-        margin-right: none;
-        margin-left: 40px;
     }
     .negative{
         width: 300px;

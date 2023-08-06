@@ -13,6 +13,14 @@
     border: 2px solid #ffe54f ;
 
 }
+.starter{
+  background-color: #bbcbfa ;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #dbf8ff ;
+
+}
 .pseudo-legendary{
   background-color: #ff8f00 ;
   width: 20px;
@@ -29,12 +37,40 @@
     border: 2px solid #af3170 ;
 
 }
+.mega{
+  background:linear-gradient(45deg,red,green,cyan,blue);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #444444 ;
+}
 .baby{
   background-color: #fa80bd ;
   width: 20px;
   height: 20px;
   border-radius: 50%;
   border: 2px solid #faaad2 ;
+}
+.paradox{
+  background:linear-gradient(0deg,#610c0c,#2e0b66);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #5f0f68 ;
+}
+.ultra-beast{
+  background:linear-gradient(0deg,#2d9713,#188102);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #3bcf16 ;
+}
+.fossil{
+  background:linear-gradient(0deg,#8d5017,#5a350a);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #83601f ;
 }
 .none{
   width: 20px;
