@@ -227,7 +227,7 @@ function set_uniqueness(is_legendary, is_mythical,is_baby, uniqueness_icon, uniq
     uniqueness_icon.classList = "heart";
     uniqueness_label.textContent = "Awesome";
     uniqueness_label.style.color = "#ffffff";
-    document.body.style.backgroundImage="url('img/mudkip wall.gif')"
+    document.body.style.backgroundImage="url('img/mudkip wall.jpeg')"
 
   } 
   else if (id.length>4) {
