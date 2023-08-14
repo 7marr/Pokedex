@@ -3,41 +3,84 @@ const max_pokemon = 1010;
 const not_loading=document.getElementById("aaa")
 const loading=document.getElementsByClassName("loading")[0]
 const container = document.getElementsByClassName("container")[0];
-
+const blur=document.getElementsByClassName("blur")[0]
+const filter=document.getElementsByClassName("filter-container")[0]
 // API url
 const url = "https://pokeapi.co/api/v2/pokemon/";
 const mega_url= "https://raw.githubusercontent.com/7marr/Pokedex/main/script/json/mega%20evolution/mega.json";
 
 
+// filter components
+const filter_options=Array.from(document.getElementsByClassName("options"))
+const subC_none=document.getElementsByClassName("none")[0]
+const subC_type=document.getElementsByClassName("type")[0]
+const subC_gen=document.getElementsByClassName("gen")[0]
+const subC_class=document.getElementsByClassName("class")[0]
+const selected_option=document.getElementsByClassName("active-option")[0]
+const filter_inner_buttons=document.querySelectorAll(".buttons-container button")
+
+// loading conponents
+const loading_button = document.getElementsByClassName("loading-button")[0];
+const loading_image = document.getElementById("loading-image");
+const close_filter_button=document.getElementsByClassName("close")[0]
+const filter_button=document.getElementsByClassName("filter")[0]
+
+
+const classes=["Common","Starter","Baby","Ancient","Mega","Ultra beast","Legendary","P-legendary","Mythical","Paradox"]
+const paradox=[984,985,986,987,988,989,990,991,992,993,994,995,1005,1006,1009,1010]
+const ancient=[138,139,140,141,142,345,346,347,348,408,409,410,411,564,565,566,567,696,697,698,699,880,881,882,883]
+const ultra_beast=[793,794,795,796,797,798,799,803,804,805,806]
+const starter=[1,4,7,152,155,158,252,255,258,387,390,393,495,498,501,650,653,656,722,725,728,810,813,816,906,909,912]
+const pseudo_legendary=[149,248,373,376,445,635,706,784,887,998]
 
 
 // Variables
+//  manage how many pokemons are displayed
 let startpoint = 1;
 let endpoint = 120;
-let start_steps=120
-let end_steps=120
+let steps=120
+// store the mega data and wich index is in
 let mega_data
 let mega_index=0
+// stores if there is a new filter
+let new_filter=false
+let finnished_displaying=true
+let current_filter="none"
 
-async function fetching_megaData(callback){
+
+
+
+// fetch the mega data then storing it then start fetching for pokemons
+async function fetching_megaData(){
     await fetch(mega_url)
     .then(res=>res.json())
     .then(data=>mega_data=data)
-    callback()
+    fetching_pokemon(startpoint,endpoint)
 }
-// Main functions
-async function fetching_pokemon() {
+
+
+
+// main pokemon fetching function 
+async function fetching_pokemon(startpoint,endpoint) {
+    // check if the value of endpoint is greater then the actual number of pokemon
     is_end();
 
 
+    display_loading_screen("flex","none")
 
-    loading.style.display="flex"
-    not_loading.style.display="none"
-
+    finnished_displaying=false
     for (let i = startpoint; i <= endpoint; i++) {
+        console.log("still....")
+        if(new_filter){
+            new_filter=false
+            finnished_displaying=true
+            break
+        }
+        // fetch and display each pokemon
         await fetch(url + i)
         .then(res=>res.json())
         .then(data=>display_pokemon(data,false))
+        
         try{
             if(mega_index<mega_data.length){
                 if (i==mega_data[mega_index].id){
@@ -52,7 +95,7 @@ async function fetching_pokemon() {
                         await fetch(url+mega_data[mega_index].api_id)
                         .then(res=>res.json())
                         .then(data=>{
-                            data.name=data.name.replace("-mega","").replace("-x"," X").replace("-y"," Y")
+                            data.name=data.name.replace("-mega","").replace("-x"," X").replace("-y"," Y").replace("-primal","")
                             data.id=mega_data[mega_index].id
                             display_pokemon(data,mega_data[mega_index].api_id)})
                         mega_index++
@@ -67,12 +110,14 @@ async function fetching_pokemon() {
 
 
     }
+    display_loading_screen("none","flex")
+    finnished_displaying=true
 
-
-    loading.style.display="none"
-    not_loading.style.display="flex"
 }
-
+function display_loading_screen(state1,state2){
+    loading.style.display=state1
+    not_loading.style.display=state2
+}
 function display_pokemon(data,mega) {
     const pokemon_name = data.name;
     const pokemon_image = data.sprites.other["official-artwork"].front_default;
@@ -109,14 +154,147 @@ function display_pokemon(data,mega) {
 
 function load_more_pokemon() {
 
-    startpoint += start_steps;
-    endpoint += end_steps;
-    start_steps=end_steps
-    end_steps+=60
-    fetching_pokemon();
+    startpoint = endpoint + 1;
+    endpoint += steps
+    steps+=120
+    fetching_pokemon(startpoint,endpoint);
+
+}
+let active_category=0
+let active_sub_category=0
+const sub_categories=[subC_none,subC_type,subC_gen,subC_class]
+
+function handle_filter_options(event){
+    const f_index=filter_options.indexOf(event.target)
+
+    if(f_index<4){
+        filter_options[active_category].classList.remove("selected")
+        sub_categories[active_category].classList.remove("visible")
+        filter_options[f_index].classList.add("selected")
+        sub_categories[f_index].classList.add("visible")
+        active_category=f_index
+        
+        if(f_index==0){
+            selected_option.innerHTML="Selected : None"
+            filter_options[active_sub_category].classList.remove("selected")
+            active_sub_category=0
+            
+
+        }
+    }
+    else{
+        filter_options[f_index].classList.add("selected")
+        selected_option.innerHTML="Selected : "+filter_options[f_index].innerHTML
+        filter_options[active_sub_category].classList.remove("selected")
+        active_sub_category=f_index
+        
+
+
+    }
+//22,31
 
 }
 
+
+
+
+function close_filter(){
+    blur.style.display="none"
+}
+function open_filter(){
+    blur.style.display="flex"
+}
+// Event litener for loading button
+
+loading_button.onclick = load_more_pokemon;
+loading_image.onclick = load_more_pokemon;
+close_filter_button.onclick = close_filter
+filter_button.onclick = open_filter
+
+
+filter_inner_buttons[0].addEventListener("click",close_filter)
+filter_inner_buttons[1].addEventListener("click",apply_filter)
+for(let i=0;i<filter_options.length;i++){
+    filter_options[i].addEventListener("click",handle_filter_options)
+}
+
+
+
+function apply_filter(){
+    close_filter()
+    active=selected_option.innerHTML.replace("Selected : ","")
+    if(current_filter!=active){
+    current_filter=active
+    new_filter=true
+    FilterBy(active)
+    }
+    
+}
+function FilterBy(active){
+    console.log(active)
+    if(new_filter==true&&finnished_displaying==false){
+        setTimeout(()=>{FilterBy(active)},200)
+        console.log("kkkkk",new_filter,finnished_displaying)
+    }
+    else{
+        new_filter=false
+        finnished_displaying=true
+
+        if(active=="None"){
+            filter_by_none()
+        }
+        else if(active.includes("GEN")){
+            filter_by_gen(active.slice(-1,))
+        }
+        else if(classes.includes(active)){
+            filter_by_class(classes.indexOf(active))
+        }
+        else{
+            filter_by_type()
+        }
+    }
+}
+
+function filter_by_none(){
+    document.getElementById("load-container").style.display="flex";
+    mega_index=0
+    new_filter=false
+    finnished_displaying=true
+    startpoint=1
+    endpoint=120
+    steps=120
+    container.innerHTML=""
+    fetching_pokemon(startpoint,endpoint)
+}
+function filter_by_gen(gen){
+    container.innerHTML=""
+    let gens=[
+        [1,151,0],[152,251,15],[252,386,21],
+        [387,493,43],[494,649,48],[650,721,49],
+        [722,809,50],[810,905,50],[906,1010,50]
+    ]
+    const startpoint=gens[gen-1][0]
+    const endpoint=gens[gen-1][1]
+    mega_index=gens[gen-1][2]
+
+    fetching_pokemon(startpoint,endpoint)
+    document.getElementById("load-container").style.display="none";
+
+}
+function filter_by_type(){
+
+}
+function filter_by_class(){
+    
+}
+
+
+
+
+
+// Initial fetching of Pokemon data if there is no filer
+
+fetching_megaData()
 // Secondary functions
 function capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -131,7 +309,7 @@ function remove_unnecessary(str) {
     for (let i = 0; i < unnecessary.length; i++) {
       str = str.replace(unnecessary[i], "");
     }
-    return str.replace("Nidoran m", "Nidoran ♂").replace("Nidoran f", "Nidoran ♀").replace("fetchd","fetch'd");
+    return str.replace("Nidoran m", "Nidoran ♂").replace("Nidoran f", "Nidoran ♀").replace("fetchd","fetch'd").replace("Type null","Type:Null");
   }
 
 function is_end() {
@@ -142,13 +320,3 @@ function is_end() {
         document.getElementById("load-container").remove();
     }
 }
-
-// Event listener for loading button
-const loading_button = document.getElementsByClassName("loading-button")[0];
-const loading_image = document.getElementById("loading-image");
-loading_button.onclick = load_more_pokemon;
-loading_image.onclick = load_more_pokemon;
-
-// Initial fetching of Pokemon data
-
-fetching_megaData(fetching_pokemon)

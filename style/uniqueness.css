@@ -26,7 +26,7 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  border: 2px solid #fdbd69 ;
+  border: 2px solid #cf9a55 ;
 
 }
 .mythical{
@@ -65,7 +65,7 @@
   border-radius: 50%;
   border: 2px solid #3bcf16 ;
 }
-.fossil{
+.ancient{
   background:linear-gradient(0deg,#8d5017,#5a350a);
   width: 20px;
   height: 20px;
@@ -111,3 +111,19 @@
     top: 0;
     left: 8px;
   }
+
+
+
+
+
+
+@media (max-width:515px) {
+  .small-text{
+    font-size: 15px;
+  }
+}
+@media (max-width:470px) {
+  .small-text{
+    font-size: 13px;
+  }
+}

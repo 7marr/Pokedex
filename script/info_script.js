@@ -200,12 +200,15 @@ function set_abilities(pokemon_abilities, ability_element, hidden_class, hidden_
 }
 
 function set_uniqueness(is_legendary, is_mythical,is_baby, uniqueness_icon, uniqueness_label) {
-  const favorites=[258,259,260,359,570,571]
+  const favorites=[258,259,260,359,10064]
   const paradox=[984,985,986,987,988,989,990,991,992,993,994,995,1005,1006,1009,1010]
-  const fossil=[138,139,140,141,142,345,346,347,348,408,409,410,411,564,565,566,567,696,697,698,699,880,881,882,883]
+  const ancient=[138,139,140,141,142,345,346,347,348,408,409,410,411,564,565,566,567,696,697,698,699,880,881,882,883]
   const ultra_beast=[793,794,795,796,797,798,799,803,804,805,806]
   const starter=[1,4,7,152,155,158,252,255,258,387,390,393,495,498,501,650,653,656,722,725,728,810,813,816,906,909,912]
-  if (is_legendary) {
+  const pseudo_legendary=[149,248,373,376,445,635,706,784,887,998]
+  const small_text=document.getElementsByClassName("unique")[0]
+  
+  if (is_legendary&&id.length<4) {
     uniqueness_icon.classList = "legendary";
     uniqueness_label.textContent = "Legendary";
     uniqueness_label.style.color = "#c0e00a";
@@ -224,7 +227,17 @@ function set_uniqueness(is_legendary, is_mythical,is_baby, uniqueness_icon, uniq
     uniqueness_icon.classList = "heart";
     uniqueness_label.textContent = "Awesome";
     uniqueness_label.style.color = "#ffffff";
+    document.body.style.backgroundImage="url('img/mudkip wall.gif')"
+
   } 
+  else if (id.length>4) {
+    uniqueness_icon.classList = "mega";
+    uniqueness_label.textContent = "Mega";
+    uniqueness_label.style.color = "#80d1af";
+    if(id==10077||id==10078){
+      uniqueness_label.textContent = "Primal";
+    }
+  }
   else if (ultra_beast.includes(parseInt(id))) {
     uniqueness_icon.classList = "ultra-beast";
     uniqueness_label.textContent = "Ultra Beast";
@@ -235,25 +248,21 @@ function set_uniqueness(is_legendary, is_mythical,is_baby, uniqueness_icon, uniq
     uniqueness_label.textContent = "Starter";
     uniqueness_label.style.color = "#d6e0ff";
   }
-  else if (fossil.includes(parseInt(id))) {
-    uniqueness_icon.classList = "fossil";
-    uniqueness_label.textContent = "Fossil";
+  else if (ancient.includes(parseInt(id))) {
+    uniqueness_icon.classList = "ancient";
+    uniqueness_label.textContent = "Ancient";
     uniqueness_label.style.color = "#a87b27";
   }
-  else if (starter.includes(parseInt(id))) {
-    uniqueness_icon.classList = "starter";
-    uniqueness_label.textContent = "Starter";
-    uniqueness_label.style.color = "#d6e0ff";
+  else if (pseudo_legendary.includes(parseInt(id))) {
+    uniqueness_icon.classList = "pseudo-legendary";
+    small_text.classList += " small-text";
+    uniqueness_label.textContent = "Pseudo Legendary";
+    uniqueness_label.style.color = "#f39f31";
   }
   else if (paradox.includes(parseInt(id))) {
     uniqueness_icon.classList = "paradox";
     uniqueness_label.textContent = "Paradox";
     uniqueness_label.style.color = "#750381";
-  }
-  else if (id.length>4) {
-    uniqueness_icon.classList = "mega";
-    uniqueness_label.textContent = "Mega";
-    uniqueness_label.style.color = "#80d1af";
   }
   // Common
   else {
@@ -437,12 +446,12 @@ function id_format(id) {
 }
 
 function remove_unnecessary(str) {
-  let unnecessary = [" baile", " male"," mega", " normal"," red meteor", " plant", " altered", " land", " red striped", " standard", " incarnate", " ordinary", " aria", " shield", " average", " 50", " midday", " solo", " disguised", " amped", " ice", " full belly", " single strike"];
+  let unnecessary = [" primal"," baile", " male"," mega", " normal"," red meteor", " plant", " altered", " land", " red striped", " standard", " incarnate", " ordinary", " aria", " shield", " average", " 50", " midday", " solo", " disguised", " amped", " ice", " full belly", " single strike"];
   str = str.replaceAll("-", " ");
   for (let i = 0; i < unnecessary.length; i++) {
     str = str.replace(unnecessary[i], "");
   }
-  return str.replace(" y", " Y").replace(" x", " X").replace("Nidoran m", "Nidoran ♂").replace("Nidoran f", "Nidoran ♀").replace("fetchd","fetch'd");
+  return str.replace(" y", " Y").replace(" x", " X").replace("Nidoran m", "Nidoran ♂").replace("Nidoran f", "Nidoran ♀").replace("fetchd","fetch'd").replace("Type null","Type:Null");
 }
 
 function name_size(pokemon_name, name_element) {

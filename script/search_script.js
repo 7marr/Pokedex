@@ -149,7 +149,7 @@ function remove_unnecessary(str) {
     for (let i = 0; i < unnecessary.length; i++) {
       str = str.replace(unnecessary[i], "");
     }
-    str = str.replace("fetchd","fetch'd").replace("Nidoran m", "Nidoran ♂").replace("Nidoran f", "Nidoran ♀");
+    str = str.replace("fetchd","fetch'd").replace("Nidoran m", "Nidoran ♂").replace("Nidoran f", "Nidoran ♀").replace("Type null","Type:Null");
     return str;
   }
   
