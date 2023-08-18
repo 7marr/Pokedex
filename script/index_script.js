@@ -26,13 +26,24 @@ const close_filter_button=document.getElementsByClassName("close")[0]
 const filter_button=document.getElementsByClassName("filter")[0]
 
 
-const classes=["Common","Starter","Baby","Ancient","Mega","Ultra beast","Legendary","P-legendary","Mythical","Paradox"]
+const classes=["Common","Alt-forms","Starter","Baby","Ancient","Ultra beast","Legendary","P-legendary","Mythical","Paradox"]
 const paradox=[984,985,986,987,988,989,990,991,992,993,994,995,1005,1006,1009,1010]
 const ancient=[138,139,140,141,142,345,346,347,348,408,409,410,411,564,565,566,567,696,697,698,699,880,881,882,883]
 const ultra_beast=[793,794,795,796,797,798,799,803,804,805,806]
 const starter=[1,4,7,152,155,158,252,255,258,387,390,393,495,498,501,650,653,656,722,725,728,810,813,816,906,909,912]
 const pseudo_legendary=[149,248,373,376,445,635,706,784,887,998]
 
+const legendary=[144,145,146,150,243,
+    244,245,249,250,377,378,379,380,
+    381,382,383,384,480, 481,482,483,
+    484,485,486,487,488,638,639,640,641,
+    642,643,644,645,646,716,717,718,772,773,
+    785,786,787,788,789,790,791,792,800,888,
+    889,890,891,892,894,895,896,897,898,905,
+    1001,1002,1003,1004,1008,1007]
+const mythical=[151,251,385,386,489,490,491,492,493,494,647,648,649,719,720,721,801,802,807,808,809,893]
+const baby=[172,173,174,175,236,238,239,240,298,360,406,433,438,439,440,446,447,458,848]
+const classes_vars=[starter,baby,ancient,ultra_beast,legendary,pseudo_legendary,mythical,paradox]
 
 // Variables
 //  manage how many pokemons are displayed
@@ -49,13 +60,16 @@ let current_filter="none"
 
 
 
-
 // fetch the mega data then storing it then start fetching for pokemons
 async function fetching_megaData(){
     await fetch(mega_url)
     .then(res=>res.json())
     .then(data=>mega_data=data)
-    fetching_pokemon(startpoint,endpoint)
+    if(sessionStorage.getItem("x")=="null"){
+        fetching_pokemon(startpoint,endpoint)
+        sessionStorage.setItem("x","done")
+    }
+
 }
 
 
@@ -63,7 +77,10 @@ async function fetching_megaData(){
 // main pokemon fetching function 
 async function fetching_pokemon(startpoint,endpoint) {
     // check if the value of endpoint is greater then the actual number of pokemon
-    is_end();
+    if(endpoint>max_pokemon){
+        endpoint=max_pokemon
+        document.getElementById("load-container").style.display="none";
+    }
 
 
     display_loading_screen("flex","none")
@@ -114,6 +131,7 @@ async function fetching_pokemon(startpoint,endpoint) {
     finnished_displaying=true
 
 }
+
 function display_loading_screen(state1,state2){
     loading.style.display=state1
     not_loading.style.display=state2
@@ -165,7 +183,10 @@ let active_sub_category=0
 const sub_categories=[subC_none,subC_type,subC_gen,subC_class]
 
 function handle_filter_options(event){
+
+
     const f_index=filter_options.indexOf(event.target)
+    
 
     if(f_index<4){
         filter_options[active_category].classList.remove("selected")
@@ -178,6 +199,7 @@ function handle_filter_options(event){
             selected_option.innerHTML="Selected : None"
             filter_options[active_sub_category].classList.remove("selected")
             active_sub_category=0
+
             
 
         }
@@ -187,6 +209,7 @@ function handle_filter_options(event){
         selected_option.innerHTML="Selected : "+filter_options[f_index].innerHTML
         filter_options[active_sub_category].classList.remove("selected")
         active_sub_category=f_index
+
         
 
 
@@ -226,8 +249,10 @@ function apply_filter(){
     if(current_filter!=active){
     current_filter=active
     new_filter=true
+    sessionStorage.setItem("filter",active)
     FilterBy(active)
     }
+
     
 }
 function FilterBy(active){
@@ -239,7 +264,7 @@ function FilterBy(active){
     else{
         new_filter=false
         finnished_displaying=true
-
+        container.innerHTML=""
         if(active=="None"){
             filter_by_none()
         }
@@ -250,7 +275,7 @@ function FilterBy(active){
             filter_by_class(classes.indexOf(active))
         }
         else{
-            filter_by_type()
+            filter_by_type(active)
         }
     }
 }
@@ -267,7 +292,7 @@ function filter_by_none(){
     fetching_pokemon(startpoint,endpoint)
 }
 function filter_by_gen(gen){
-    container.innerHTML=""
+
     let gens=[
         [1,151,0],[152,251,15],[252,386,21],
         [387,493,43],[494,649,48],[650,721,49],
@@ -281,20 +306,71 @@ function filter_by_gen(gen){
     document.getElementById("load-container").style.display="none";
 
 }
-function filter_by_type(){
+function filter_by_class(index){
+    index-=2
+    console.log(index)
+    if(index>=0){
+        fetching_pokemon2(classes_vars[index],"class")
+        document.getElementById("load-container").style.display="none";
+    }
+    else if (index==-1){
+        
+    }
+}
+async function filter_by_type(type){
+    await fetch("https://pokeapi.co/api/v2/type/"+type.toLowerCase())
+    .then(res=>res.json())
+    .then(data=>fetching_pokemon2(data.pokemon,"type"))
+    document.getElementById("load-container").style.display="none";
 
 }
-function filter_by_class(){
-    
+
+async function fetching_pokemon2(arr,func){
+    finnished_displaying=false
+    display_loading_screen("flex","none")
+    for(let i=0;i<arr.length;i++){
+        if(new_filter){
+            new_filter=false
+            finnished_displaying=true
+            break
+        }
+        let id2
+        if(func=="type"){
+            id2=arr[i].pokemon.url.replace("https://pokeapi.co/api/v2/pokemon/","").replace("/","")
+        }
+        else{
+            id2=String(arr[i])
+        }
+
+        console.log(id2)
+        if(id2.length<5){
+            await fetch("https://pokeapi.co/api/v2/pokemon/"+id2)
+            .then(res=>res.json())
+            .then(data=>display_pokemon(data,false))
+        }
+
+    }
+    display_loading_screen("none","flex")
+    finnished_displaying=true
+
+}
+console.log(sessionStorage.getItem("filter"))
+if(sessionStorage.getItem("filter")==null){
+    sessionStorage.setItem("x","null")
+    fetching_megaData()
+    selected_option.innerHTML="Selected : None"
+
+}
+else{
+    selected_option.innerHTML="Selected : "+sessionStorage.getItem("filter")
+    fetching_megaData()
+    FilterBy(sessionStorage.getItem("filter"))
 }
 
 
 
 
 
-// Initial fetching of Pokemon data if there is no filer
-
-fetching_megaData()
 // Secondary functions
 function capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -312,11 +388,3 @@ function remove_unnecessary(str) {
     return str.replace("Nidoran m", "Nidoran ♂").replace("Nidoran f", "Nidoran ♀").replace("fetchd","fetch'd").replace("Type null","Type:Null");
   }
 
-function is_end() {
-    if (endpoint > max_pokemon) {
-        endpoint = max_pokemon;
-        loading_button.remove();
-        loading_image.remove();
-        document.getElementById("load-container").remove();
-    }
-}
