@@ -110,6 +110,11 @@
         "form": "Alolan"
     },
     {
+        "api_id": "10161",
+        "id": 52,
+        "form": "Galarian"
+    },
+    {
         "api_id": "10108",
         "id": 53,
         "form": "Alolan"
@@ -150,9 +155,34 @@
         "form": "Alolan"
     },
     {
+        "api_id": "10162",
+        "id": 77,
+        "form": "Galarian"
+    },
+    {
+        "api_id": "10163",
+        "id": 78,
+        "form": "Galarian"
+    },
+    {
+        "api_id": "10164",
+        "id": 79,
+        "form": "Galarian"
+    },
+    {
         "api_id": "10071",
         "id": 80,
         "form": "Mega"
+    },
+    {
+        "api_id": "10165",
+        "id": 80,
+        "form": "Galarian"
+    },
+    {
+        "api_id": "10166",
+        "id": 83,
+        "form": "Galarian"
     },
     {
         "api_id": "10112",
@@ -198,6 +228,11 @@
         "api_id": "10115",
         "id": 105,
         "form": "Alolan"
+    },
+    {
+        "api_id": "10167",
+        "id": 110,
+        "form": "Galarian"
     },
     {
         "api_id": "10039",
@@ -275,6 +310,11 @@
         "form": "Mega"
     },
     {
+        "api_id": "10172",
+        "id": 199,
+        "form": "Galarian"
+    },
+    {
         "api_id": "10072",
         "id": 208,
         "form": "Mega"
@@ -300,6 +340,11 @@
         "form": "Hisuian"
     },
     {
+        "api_id": "10173",
+        "id": 222,
+        "form": "Galarian"
+    },
+    {
         "api_id": "10048",
         "id": 229,
         "form": "Mega"
@@ -323,6 +368,16 @@
         "api_id": "10064",
         "id": 260,
         "form": "Mega"
+    },
+    {
+        "api_id": "10174",
+        "id": 263,
+        "form": "Galarian"
+    },
+    {
+        "api_id": "10175",
+        "id": 264,
+        "form": "Galarian"
     },
     {
         "api_id": "10051",
@@ -508,7 +563,22 @@
         "api_id": "10237",
         "id": 549,
         "form": "Hisuian"
-    }, 
+    },
+    {
+        "api_id": "10176",
+        "id": 554,
+        "form": "Galarian"
+    },
+    {
+        "api_id": "10177",
+        "id": 555,
+        "form": "Galarian"
+    },
+    {
+        "api_id": "10179",
+        "id": 562,
+        "form": "Galarian"
+    },
     {
         "api_id": "10207",
         "id": 569,
@@ -524,6 +594,11 @@
         "id": 571,
         "form": "Hisuian"
     },
+    {
+        "api_id": "10180",
+        "id": 618,
+        "form": "Galarian"
+    }, 
     {
         "api_id": "10240",
         "id": 628,
@@ -695,11 +770,6 @@
         "form":"Alternative"
     },
     {
-        "api_id": "10219",
-        "id": 849,
-        "form": "Gigantamax"
-    },
-    {
         "api_id": "10228",
         "id": 849,
         "form": "Gigantamax"
@@ -785,3 +855,5 @@
         "form":"Alternative"
     }
 ]
+
+
