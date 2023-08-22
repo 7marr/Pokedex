@@ -149,7 +149,7 @@ async function fetch_evo_chain(){
   .then(data=>get_evo_ids(data))
 }
 
-function get_evo_ids(data){
+async function get_evo_ids(data){
   const first= data.chain.species.url.replaceAll("/","").replace("https:pokeapi.coapiv2pokemon-species","")
   let middle=[]
   let last=[]
@@ -189,10 +189,11 @@ function get_evo_ids(data){
   }
   else{
     if(chain_type=="linear"){
-      linear_evolution(evolution_chain)
+      linear_evolution(evolution_chain,evolution_container)
     }
     else if(chain_type=="branched"){
-      console.log("cumming soon ......")
+      branched_evolution(evolution_chain)
+
     }
   }
   
@@ -204,7 +205,8 @@ function get_evo_ids(data){
       instance.querySelector("h2").textContent = item.title;
       instance.querySelector("p").textContent = item.content;
       container.appendChild(instance); */
-async function linear_evolution(ids){
+
+async function linear_evolution(ids,container){
   const box_template=document.getElementById("chain-box")
 
   for(let i=0;i<ids.length;i++){
@@ -224,13 +226,102 @@ async function linear_evolution(ids){
         window.location.href="info.html?id=" + data.id
       } )
       
-      evolution_container.append(template)
+      container.append(template)
     })
 
     }
   
 
+}
 
+async function branched_evolution(evolution_chain){
+  const evolution_container2=document.createElement("div")
+  const OR=document.createElement("div")
+  const box_6=document.getElementsByClassName("n6")[0]
+
+  evolution_container2.classList.add("evolution-container")
+  OR.classList.add("or")
+
+  if(evolution_chain.length==2&&evolution_chain[1].length==2){
+    const temp=[evolution_chain[1][0],evolution_chain[0],evolution_chain[1][1]]
+    await linear_evolution(temp,evolution_container)
+    document.getElementsByClassName("arrow")[0].innerHTML="&larr;"
+  }
+  else if(evolution_chain.length==2&&evolution_chain[1].length==3){
+
+    await linear_evolution([evolution_chain[0]],evolution_container)
+    box_6.append(OR,evolution_container2)
+    OR.append(
+      document.createElement("div"),
+      document.createElement("div"),
+      document.createElement("div")
+    )    
+    const arrows=document.querySelectorAll(".or div")
+
+    for(let i=0;i<arrows.length;i++){
+      arrows[i].classList.add("arrow")
+    }
+    arrows[0].innerHTML="&swarr;"
+    arrows[1].innerHTML="&darr;"
+    arrows[2].innerHTML="&searr;"
+
+    await linear_evolution(evolution_chain[1],evolution_container2)
+
+    for(let i=0;i<2;i++){
+      document.getElementsByClassName("arrow")[3].remove()
+    }
+
+  }
+  else if(evolution_chain.length==3){
+    if(Array.isArray(evolution_chain[1])&&Array.isArray(evolution_chain[2])){
+
+      let temp=[
+        [evolution_chain[0],evolution_chain[1][0],evolution_chain[2][0]],
+        [evolution_chain[0],evolution_chain[1][1],evolution_chain[2][1]]
+      ]
+
+      console.log(temp)
+
+
+
+      await linear_evolution(temp[0],evolution_container)
+
+      OR.innerHTML="OR"
+      box_6.append(OR,evolution_container2)
+
+      await linear_evolution(temp[1],evolution_container2)
+
+
+    }
+    else{
+      await linear_evolution(evolution_chain.slice(0,-1),evolution_container)
+      
+      const box_template=document.getElementById("chain-box-2-branches")
+      const template=document.importNode(box_template.content,true)
+      evolution_container.append(template)
+      const column=document.getElementsByClassName("column")
+      await linear_evolution(evolution_chain[2],column[1])
+
+      document.getElementsByClassName("evolution")[2].classList.add("full-width")
+      document.getElementsByClassName("evolution")[3].classList.add("full-width")
+      column[1].style.width="20%"
+      document.getElementsByClassName("arrow")[3].remove()
+
+    }
+  }
+  else{
+    linear_evolution([evolution_chain[0]],evolution_container)
+    OR.innerHTML="&darr;"
+    OR.classList.add("arrow")
+    box_6.append(OR,evolution_container2)
+    await linear_evolution(evolution_chain[1],evolution_container2)
+    
+    for(let i=0;i<evolution_chain[1].length-1;i++){
+      document.getElementsByClassName("arrow")[1].remove()
+    }
+  }
+
+  
 }
 
 
