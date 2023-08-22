@@ -38,11 +38,11 @@
 
 }
 .mega{
-  background:linear-gradient(45deg,red,green,cyan,blue);
+  background:linear-gradient(45deg,#016637,#018eb9,#176e02);
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  border: 2px solid #444444 ;
+  border: 2px solid #296600 ;
 }
 .baby{
   background-color: #fa80bd ;

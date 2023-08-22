@@ -31,7 +31,7 @@ const paradox=[984,985,986,987,988,989,990,991,992,993,994,995,1005,1006,1009,10
 const ancient=[138,139,140,141,142,345,346,347,348,408,409,410,411,564,565,566,567,696,697,698,699,880,881,882,883]
 const ultra_beast=[793,794,795,796,797,798,799,803,804,805,806]
 const starter=[1,4,7,152,155,158,252,255,258,387,390,393,495,498,501,650,653,656,722,725,728,810,813,816,906,909,912]
-const pseudo_legendary=[149,248,373,376,445,635,706,784,887,998]
+const pseudo_legendary=[149,248,373,376,445,635,706,10242,784,887,998]
 
 const legendary=[144,145,146,150,243,
     244,245,249,250,377,378,379,380,
@@ -65,11 +65,7 @@ async function fetching_megaData(){
     await fetch(mega_url)
     .then(res=>res.json())
     .then(data=>mega_data=data)
-    if(sessionStorage.getItem("x")=="null"){
-        fetching_pokemon(startpoint,endpoint)
-        sessionStorage.setItem("x","done")
-    }
-
+    fetching_pokemon(startpoint,endpoint)
 }
 
 
@@ -98,32 +94,33 @@ async function fetching_pokemon(startpoint,endpoint) {
         .then(res=>res.json())
         .then(data=>display_pokemon(data,false))
         
-        try{
-            if(mega_index<mega_data.length){
-                if (i==mega_data[mega_index].id){
-                    let j=0
-                    if(i==6||i==150){
-                        j=2
+    
+        if(mega_index<mega_data.length){
+            if (i==mega_data[mega_index].id){
+                let finnished=0
+                let id=mega_data[mega_index].id
+                for(let i=0;finnished==0;i++){
+                    await fetch(url+mega_data[mega_index].api_id)
+                    .then(res=>res.json())
+                    .then(data=>{
+                        data.name=data.name.replace("-mega","").replace("-x"," X").replace("-y"," Y").replace("-primal","").replace("-origin","")
+                        data.id=mega_data[mega_index].id
+                        display_pokemon(data,mega_data[mega_index].api_id)})
+                    mega_index++
+                    if(mega_index<mega_data.length){
+                        if(id!=mega_data[mega_index].id){
+                            finnished=1
+                        }
                     }
                     else{
-                        j=1
+                        break
                     }
-                    for(let i=0;i<j;i++){
-                        await fetch(url+mega_data[mega_index].api_id)
-                        .then(res=>res.json())
-                        .then(data=>{
-                            data.name=data.name.replace("-mega","").replace("-x"," X").replace("-y"," Y").replace("-primal","")
-                            data.id=mega_data[mega_index].id
-                            display_pokemon(data,mega_data[mega_index].api_id)})
-                        mega_index++
-                    }
-        
+                   
                 }
+    
             }
         }
-        catch{
-            location.reload()
-        }
+    
 
 
     }
@@ -198,6 +195,7 @@ function handle_filter_options(event){
         if(f_index==0){
             selected_option.innerHTML="Selected : None"
             filter_options[active_sub_category].classList.remove("selected")
+            filter_options[0].classList.add("selected")
             active_sub_category=0
 
             
@@ -249,7 +247,6 @@ function apply_filter(){
     if(current_filter!=active){
     current_filter=active
     new_filter=true
-    sessionStorage.setItem("filter",active)
     FilterBy(active)
     }
 
@@ -294,9 +291,9 @@ function filter_by_none(){
 function filter_by_gen(gen){
 
     let gens=[
-        [1,151,0],[152,251,15],[252,386,21],
-        [387,493,43],[494,649,48],[650,721,49],
-        [722,809,50],[810,905,50],[906,1010,50]
+        [1,151,0],[152,251,60],[252,386,71],
+        [387,493,101],[494,649,110],[650,721,128],
+        [722,809,135],[810,905,143],[906,1010,170]
     ]
     const startpoint=gens[gen-1][0]
     const endpoint=gens[gen-1][1]
@@ -308,13 +305,18 @@ function filter_by_gen(gen){
 }
 function filter_by_class(index){
     index-=2
-    console.log(index)
+    document.getElementById("load-container").style.display="none";
+
     if(index>=0){
         fetching_pokemon2(classes_vars[index],"class")
-        document.getElementById("load-container").style.display="none";
     }
     else if (index==-1){
-        
+        let arr=[]
+        for(let i =0;i<mega_data.length;i++){
+            arr.push(mega_data[i].api_id)
+        }
+        console.log(arr)
+        fetching_pokemon2(arr,"forms")
     }
 }
 async function filter_by_type(type){
@@ -343,10 +345,25 @@ async function fetching_pokemon2(arr,func){
         }
 
         console.log(id2)
-        if(id2.length<5){
+        if(func=="forms"||id2==10242||id2.length<5){
             await fetch("https://pokeapi.co/api/v2/pokemon/"+id2)
             .then(res=>res.json())
-            .then(data=>display_pokemon(data,false))
+            .then(data=>{
+                if(func!="forms"){
+                    if(id2==10242){
+                        data.id=706
+                        display_pokemon(data,10242)
+                    }
+                    else{
+                        display_pokemon(data,false)
+                    }
+                }
+                else{
+                    data.name=data.name.replace("-mega","").replace("-x"," X").replace("-y"," Y").replace("-primal","").replace("-origin","")
+                    data.id=mega_data[i].id
+                    display_pokemon(data,mega_data[i].api_id)
+                }
+                })
         }
 
     }
@@ -354,19 +371,8 @@ async function fetching_pokemon2(arr,func){
     finnished_displaying=true
 
 }
-console.log(sessionStorage.getItem("filter"))
-if(sessionStorage.getItem("filter")==null){
-    sessionStorage.setItem("x","null")
-    fetching_megaData()
-    selected_option.innerHTML="Selected : None"
 
-}
-else{
-    selected_option.innerHTML="Selected : "+sessionStorage.getItem("filter")
-    fetching_megaData()
-    FilterBy(sessionStorage.getItem("filter"))
-}
-
+fetching_megaData()
 
 
 
@@ -377,7 +383,10 @@ function capitalize(str) {
 }
 
 function remove_unnecessary(str) {
-    let unnecessary = [" baile", " male", " normal", " plant", " altered", " land",
+    let unnecessary = [" gmax"," alola"," galar"," sunny"," rainy"," snowy"," attack"," defense"," speed",
+    " sky"," hisui"," therian", "black","white"," resolute"," pirouette"," female",
+    " complete"," unbound"," low key"," midnight"," dusk"," dawn"," ultra"," eternamax",
+     "crowned"," rapid strike"," shadow"," hero"," baile", " male", " normal", " plant", " altered", " land",
      " red striped", " standard", " incarnate", " ordinary", " aria", " shield",
       " average", " 50", " midday", " solo", " disguised", " amped", " ice"," red meteor",
        " full belly", " single strike"];

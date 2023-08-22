@@ -25,7 +25,8 @@
 
 }
 .mega-box{
-    background:linear-gradient(0deg,#643e698e,#3728508e,#3a2f588e,#2f33588e);
+    /*background:linear-gradient(0deg,#643e698e,#3728508e,#3a2f588e,#2f33588e);*/
+    background-color: #223a4963;
     border: 1px solid #331a3fb9;
     box-shadow: 0px 0px 30px #15111ab9;
 }

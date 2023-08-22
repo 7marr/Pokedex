@@ -7,11 +7,14 @@ let mega_id
 let type_num = [];
 let evolutions=[]
 let mega_data
+let mega_index
+let  API_url_evolution_chain
+
+
 
 // Base URLs for API endpoints
 const API_url_pokemon = "https://pokeapi.co/api/v2/pokemon/";
 const API_url_pokemon_species = "https://pokeapi.co/api/v2/pokemon-species/";
-const API_url_evolution_chain="https://pokeapi.co/api/v2/evolution-chain/"
 const github_types_url="https://raw.githubusercontent.com/7marr/Pokedex/main/script/json/types/"
 const github_sprited_url="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/"//ex : back/shiny/637.gif 
 const mega_url= "https://raw.githubusercontent.com/7marr/Pokedex/main/script/json/mega%20evolution/mega.json";
@@ -26,6 +29,7 @@ async function fetching_megaData(callback){
   .then(data=>mega_data=data)
   for(let i=0;i<mega_data.length;i++){
     if(mega_data[i].api_id===id){
+      mega_index=i
       mega_id=mega_data[i].id
       break
     }
@@ -78,7 +82,12 @@ function display_pokemon_1(data) {
   } else {
     height_element.textContent = pokemon_height * 10 + " cm";
   }
-  weight_element.textContent = pokemon_weight / 10 + " kg";
+  if(pokemon_weight==0){
+    weight_element.textContent = "?" + " kg";
+  }
+  else{
+    weight_element.textContent = pokemon_weight / 10 + " kg";
+  }
 
   set_type(pokemon_types, type_1_element, type_2_element);
   name_size(pokemon_name, name_element);
@@ -111,8 +120,8 @@ async function display_pokemon_2(data) {
   const is_mythical = data.is_mythical;
   const is_baby=data.is_baby;
   let pokemon_description = data.flavor_text_entries;
-  const evolution_chain_id=data.evolution_chain.url.replace("https://pokeapi.co/api/v2/evolution-chain/","").replace("/","")
-
+  API_url_evolution_chain=data.evolution_chain.url
+  fetch_evo_chain()
 
   // Converting roman numerals to base-10 numerals
   pokemon_gen = roman_to_num(pokemon_gen);
@@ -128,20 +137,103 @@ async function display_pokemon_2(data) {
   description_element.textContent = find_en_description(pokemon_description);
   gen_element.textContent = pokemon_gen;
   set_uniqueness(is_legendary, is_mythical,is_baby, uniqueness_icon, uniqueness_label);
-  /*
-  await fetching_evolution_chain(evolution_chain_id)
 
-  if(evolutions.length==1){
-    handle_1_evo()  }
-  else if(evolutions.length==2){
-    handle_2_evo()
-  }
-  else if(evolutions.length==3){
-    handle_3_evo()
-  } 
 
-*/
 }
+
+
+
+async function fetch_evo_chain(){
+  await fetch(API_url_evolution_chain)
+  .then(res=>res.json())
+  .then(data=>get_evo_ids(data))
+}
+
+function get_evo_ids(data){
+  const first= data.chain.species.url.replaceAll("/","").replace("https:pokeapi.coapiv2pokemon-species","")
+  let middle=[]
+  let last=[]
+  if(data.chain.evolves_to.length>0){
+    for(let i=0;i<data.chain.evolves_to.length;i++){
+      middle.push(data.chain.evolves_to[i].species.url.replaceAll("/","").replace("https:pokeapi.coapiv2pokemon-species",""))
+    }
+    if(middle.length>0){
+      for(let i=0;i<data.chain.evolves_to.length;i++){
+        for(let j=0;j<data.chain.evolves_to[i].evolves_to.length;j++){
+          last.push(data.chain.evolves_to[i].evolves_to[j].species.url.replaceAll("/","").replace("https:pokeapi.coapiv2pokemon-species",""))
+        }
+      }
+    }
+  }
+
+
+  let evolution_chain=[first]
+  let chain_type
+  let temp=[middle,last]
+
+  for(let i=0;i<temp.length;i++){
+    if(temp[i].length==1){
+      evolution_chain.push(temp[i][0])
+      chain_type="linear"
+    }
+    else if(temp[i].length>1){
+      evolution_chain.push(temp[i])
+      chain_type="branched"
+    }
+  }
+
+  console.log(chain_type)
+
+  if(evolution_chain.length==1){
+    document.getElementsByClassName("container")[2].remove()
+  }
+  else{
+    if(chain_type=="linear"){
+      linear_evolution(evolution_chain)
+    }
+    else if(chain_type=="branched"){
+      console.log("cumming soon ......")
+    }
+  }
+  
+
+}
+
+/*
+      const instance = document.importNode(template.content, true);
+      instance.querySelector("h2").textContent = item.title;
+      instance.querySelector("p").textContent = item.content;
+      container.appendChild(instance); */
+async function linear_evolution(ids){
+  const box_template=document.getElementById("chain-box")
+
+  for(let i=0;i<ids.length;i++){
+    const template=document.importNode(box_template.content,true)
+
+    await fetch(API_url_pokemon+ids[i])
+    .then(res=>res.json())
+    .then(data=>{
+      console.log(data)
+      if(i==ids.length-1){
+        template.querySelectorAll("div")[3].remove()
+      }
+      template.querySelector("img").src=data.sprites.other["official-artwork"].front_default;
+      template.querySelectorAll("div")[2].textContent="#"+data.id
+      template.querySelectorAll("div")[1].textContent=remove_unnecessary(capitalize(data.name))
+      template.querySelectorAll("div")[0].addEventListener("click",function(){
+        window.location.href="info.html?id=" + data.id
+      } )
+      
+      evolution_container.append(template)
+    })
+
+    }
+  
+
+
+}
+
+
 // Function to get an array of Pokemon types
 function get_types(arr) {
   type_num = arr.length;
@@ -207,11 +299,21 @@ function set_uniqueness(is_legendary, is_mythical,is_baby, uniqueness_icon, uniq
   const starter=[1,4,7,152,155,158,252,255,258,387,390,393,495,498,501,650,653,656,722,725,728,810,813,816,906,909,912]
   const pseudo_legendary=[149,248,373,376,445,635,706,784,887,998]
   const small_text=document.getElementsByClassName("unique")[0]
-  
-  if (is_legendary&&id.length<4) {
-    uniqueness_icon.classList = "legendary";
-    uniqueness_label.textContent = "Legendary";
-    uniqueness_label.style.color = "#c0e00a";
+  console.log(mega_data[mega_index])
+  if (is_legendary||id==772){
+    if(mega_data[mega_index]!=undefined){
+      if(mega_data[mega_index].form!="Mega"){
+        uniqueness_icon.classList = "legendary";
+        uniqueness_label.textContent = "Legendary";
+        uniqueness_label.style.color = "#c0e00a";
+      }
+    }
+    else{
+      uniqueness_icon.classList = "legendary";
+      uniqueness_label.textContent = "Legendary";
+      uniqueness_label.style.color = "#c0e00a";
+    }
+
   } 
   else if (is_mythical) {
     uniqueness_icon.classList = "mythical";
@@ -232,11 +334,9 @@ function set_uniqueness(is_legendary, is_mythical,is_baby, uniqueness_icon, uniq
   } 
   else if (id.length>4) {
     uniqueness_icon.classList = "mega";
-    uniqueness_label.textContent = "Mega";
-    uniqueness_label.style.color = "#80d1af";
-    if(id==10077||id==10078){
-      uniqueness_label.textContent = "Primal";
-    }
+    uniqueness_label.textContent = mega_data[mega_index].form;
+    uniqueness_label.style.color = "#26c000";
+
   }
   else if (ultra_beast.includes(parseInt(id))) {
     uniqueness_icon.classList = "ultra-beast";
@@ -446,7 +546,13 @@ function id_format(id) {
 }
 
 function remove_unnecessary(str) {
-  let unnecessary = [" primal"," baile", " male"," mega", " normal"," red meteor", " plant", " altered", " land", " red striped", " standard", " incarnate", " ordinary", " aria", " shield", " average", " 50", " midday", " solo", " disguised", " amped", " ice", " full belly", " single strike"];
+  let unnecessary = [" gmax"," alola"," galar"," sunny"," rainy"," snowy"," attack"," defense"," speed",
+  " sky"," hisui"," therian", "black","white"," resolute"," pirouette"," female",
+  " complete"," unbound"," low key"," midnight"," dusk"," dawn"," ultra"," eternamax",
+   "crowned"," rapid strike"," shadow"," hero"," origin"," primal"," baile", " male"," mega",
+    " normal"," red meteor", " plant", " altered", " land", " red striped", " standard", " incarnate",
+     " ordinary", " aria", " shield", " average", " 50", " midday", " solo", " disguised", " amped", " ice",
+      " full belly", " single strike"];
   str = str.replaceAll("-", " ");
   for (let i = 0; i < unnecessary.length; i++) {
     str = str.replace(unnecessary[i], "");
@@ -495,6 +601,24 @@ function roman_to_num(str) {
 
 
 fetching_megaData(fetching_pokemon_2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
