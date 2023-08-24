@@ -79,7 +79,16 @@ function display_pokemon_1(data) {
     sub_name_element.innerHTML=sub_name
   }
   else if(pokemon_id=="#0258"||pokemon_id=="#0259"){
-    sub_name_element.innerHTML="Cute"
+    sub_name_element.innerHTML="Adorable"
+  }
+  else if(pokemon_id=="#0260"){
+    sub_name_element.innerHTML="Awesome"
+  }
+  else if(pokemon_id="#0648"){
+    sub_name_element.innerHTML="Aria"
+  }
+  else if(pokemon_id="#0892"){
+    sub_name_element.innerHTML="Single Strike"
   }
   else{
     sub_name_element.remove()
