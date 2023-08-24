@@ -513,19 +513,19 @@
         "api_id": "10013",
         "id": 351,
         "form":"Alternative",
-        "sub_name":""
+        "sub_name":"Sunny"
     },
     {
         "api_id": "10014",
         "id": 351,
         "form":"Alternative",
-        "sub_name":""
+        "sub_name":"Rainy"
     },
     {
         "api_id": "10015",
         "id": 351,
         "form":"Alternative",
-        "sub_name":""
+        "sub_name":"Snowy"
     },
     {
         "api_id": "10056",
@@ -591,19 +591,19 @@
         "api_id": "10001",
         "id": 386,
         "form":"Alternative",
-        "sub_name":""
+        "sub_name":"Attack"
     },
     {
         "api_id": "10002",
         "id": 386,
         "form":"Alternative",
-        "sub_name":""
+        "sub_name":"Defense"
     },
     {
         "api_id": "10003",
         "id": 386,
         "form":"Alternative",
-        "sub_name":""
+        "sub_name":"Speed"
     },
     {
         "api_id": "10088",
@@ -658,7 +658,7 @@
         "api_id": "10006",
         "id": 492,
         "form":"Alternative",
-        "sub_name":""
+        "sub_name":"Sky"
     },
     {
         "api_id": "10236",
@@ -754,19 +754,19 @@
         "api_id": "10023",
         "id": 646,
         "form":"Alternative",
-        "sub_name":""
+        "sub_name":"Black"
     },
     {
         "api_id": "10024",
         "id": 647,
         "form":"Alternative",
-        "sub_name":""
+        "sub_name":"White"
     },
     {
         "api_id": "10018",
         "id": 648,
         "form":"Alternative",
-        "sub_name":""
+        "sub_name":"Pirouette"
     },
     {
         "api_id": "10025",
@@ -796,7 +796,7 @@
         "api_id": "10120",
         "id": 718,
         "form":"Alternative",
-        "sub_name":""
+        "sub_name":"Complete"
     },
     {
         "api_id": "10075",
@@ -808,7 +808,7 @@
         "api_id": "10086",
         "id": 720,
         "form":"Alternative",
-        "sub_name":""
+        "sub_name":"Unbound"
     },
     {
         "api_id": "10244",
@@ -820,31 +820,31 @@
         "api_id": "10126",
         "id": 745,
         "form":"Alternative",
-        "sub_name":""
+        "sub_name":"Midnight"
     },
     {
         "api_id": "10152",
         "id": 745,
         "form":"Alternative",
-        "sub_name":""
+        "sub_name":"Dusk"
     },
     {
         "api_id": "10155",
         "id": 800,
         "form":"Alternative",
-        "sub_name":""
+        "sub_name":"Dusk Mane"
     },
     {
         "api_id": "10156",
         "id": 800,
         "form":"Alternative",
-        "sub_name":""
+        "sub_name":"Dawn Wings"
     },
     {
         "api_id": "10157",
         "id": 800,
         "form":"Alternative",
-        "sub_name":""
+        "sub_name":"Ultra"
     },
     {
         "api_id": "10147",
@@ -922,7 +922,7 @@
         "api_id": "10184",
         "id": 849,
         "form":"Alternative",
-        "sub_name":""
+        "sub_name":"Low Key"
     },
     {
         "api_id": "10228",
@@ -970,19 +970,19 @@
         "api_id": "10188",
         "id": 888,
         "form":"Alternative",
-        "sub_name":""
+        "sub_name":"Crowned"
     },
     {
         "api_id": "10189",
         "id": 889,
         "form":"Alternative",
-        "sub_name":""
+        "sub_name":"Crowned"
     },
     {
         "api_id": "10190",
         "id": 890,
         "form":"Alternative",
-        "sub_name":""
+        "sub_name":"Eternamax"
     },
     {
         "api_id": "10226",
@@ -994,7 +994,7 @@
         "api_id": "10191",
         "id": 892,
         "form":"Alternative",
-        "sub_name":""
+        "sub_name":"Rapid Strike"
     },
     {
         "api_id": "10227",
@@ -1006,13 +1006,13 @@
         "api_id": "10193",
         "id": 898,
         "form":"Alternative",
-        "sub_name":""
+        "sub_name":"Ice Rider"
     },
     {
         "api_id": "10194",
         "id": 898,
         "form":"Alternative",
-        "sub_name":""
+        "sub_name":"Shadow Rider"
     },
     {
         "api_id": "10249",
@@ -1024,7 +1024,7 @@
         "api_id": "10256",
         "id": 964,
         "form":"Alternative",
-        "sub_name":""
+        "sub_name":"Hero"
     }
 ]
 
