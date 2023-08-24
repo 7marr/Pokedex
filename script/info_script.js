@@ -84,10 +84,10 @@ function display_pokemon_1(data) {
   else if(pokemon_id=="#0260"){
     sub_name_element.innerHTML="Awesome"
   }
-  else if(pokemon_id="#0648"){
+  else if(pokemon_id=="#0648"){
     sub_name_element.innerHTML="Aria"
   }
-  else if(pokemon_id="#0892"){
+  else if(pokemon_id=="#0892"){
     sub_name_element.innerHTML="Single Strike"
   }
   else{
