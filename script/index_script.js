@@ -250,7 +250,7 @@ function apply_filter(){
     FilterBy(active)
     }
 
-    
+    //10242
 }
 function FilterBy(active){
     console.log(active)
@@ -345,18 +345,13 @@ async function fetching_pokemon2(arr,func){
         }
 
         console.log(id2)
-        if(func=="forms"||id2==10242||id2.length<5){
+        if(func=="forms"||id2.length<5){
             await fetch("https://pokeapi.co/api/v2/pokemon/"+id2)
             .then(res=>res.json())
             .then(data=>{
                 if(func!="forms"){
-                    if(id2==10242){
-                        data.id=706
-                        display_pokemon(data,10242)
-                    }
-                    else{
-                        display_pokemon(data,false)
-                    }
+                    display_pokemon(data,false)
+                    
                 }
                 else{
                     data.name=data.name.replace("-mega","").replace("-x"," X").replace("-y"," Y").replace("-primal","").replace("-origin","")

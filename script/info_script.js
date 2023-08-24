@@ -19,6 +19,7 @@ const github_types_url="https://raw.githubusercontent.com/7marr/Pokedex/main/scr
 const github_sprited_url="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/"//ex : back/shiny/637.gif 
 const mega_url= "https://raw.githubusercontent.com/7marr/Pokedex/main/script/json/mega%20evolution/mega.json";
 const evolution_container=document.getElementsByClassName("evolution-container")[0]
+const alt_container=document.getElementsByClassName("alt-container")[0]
 
 /* --------- Fetching and Displaying Pokemon Data Group --------- */
 
@@ -122,6 +123,7 @@ async function display_pokemon_2(data) {
   let pokemon_description = data.flavor_text_entries;
   API_url_evolution_chain=data.evolution_chain.url
   fetch_evo_chain()
+  find_alt_forms()
 
   // Converting roman numerals to base-10 numerals
   pokemon_gen = roman_to_num(pokemon_gen);
@@ -141,7 +143,65 @@ async function display_pokemon_2(data) {
 
 }
 
+function find_alt_forms(){
+  let form_id
+  if(id.length==5){
+    form_id=mega_id
+  }
+  else{
+    form_id=id
+  }
+  let alt_forms=[]
+  for(let i=0;i<mega_data.length;i++){
+    if(mega_data[i].id==form_id){
+      alt_forms.push(mega_data[i].api_id)
+    }
+  }
+  if(alt_forms.length==0){
+    document.getElementsByClassName("n7")[0].remove()
+  }
+  else{
+    console.log(alt_forms)
+    for(let i=0;i<alt_forms.length;i++){
+      if(alt_forms[i]==id){
+        alt_forms[i]=String(mega_id)
+      }
+    }
+    fetch_alt_forms(alt_forms)
+  }
 
+}
+async function fetch_alt_forms(ids){
+  console.log(ids)
+  for(let i=0;i<ids.length;i++){
+    await fetch(API_url_pokemon+ids[i])
+    .then(res=>res.json())
+    .then(data=>display_alt_forms(data))
+  }
+}
+function display_alt_forms(data){
+  const box=document.createElement("div")
+  const box_name=document.createElement("div")
+  const box_img=document.createElement("img")
+  const box_id=document.createElement("div")
+
+  box_name.innerHTML=remove_unnecessary(capitalize(data.name)).replace(" Y","").replace(" X","")
+  box_img.src=data.sprites.other["official-artwork"].front_default;
+  box_id.innerHTML="#"+id
+  if(id.length==5){
+    box_id.innerHTML="#"+mega_id
+  }
+  
+  box.append(box_name,box_img,box_id)
+  box.addEventListener("click",function(){
+    window.location.href="info.html?id="+data.id
+  })
+  box.classList.add("evolution")
+  alt_container.append(box)
+  
+  
+
+}
 
 async function fetch_evo_chain(){
   await fetch(API_url_evolution_chain)
@@ -182,7 +242,6 @@ async function get_evo_ids(data){
     }
   }
 
-  console.log(chain_type)
 
   if(evolution_chain.length==1){
     document.getElementsByClassName("container")[2].remove()
@@ -200,22 +259,25 @@ async function get_evo_ids(data){
 
 }
 
-/*
-      const instance = document.importNode(template.content, true);
-      instance.querySelector("h2").textContent = item.title;
-      instance.querySelector("p").textContent = item.content;
-      container.appendChild(instance); */
 
 async function linear_evolution(ids,container){
   const box_template=document.getElementById("chain-box")
 
   for(let i=0;i<ids.length;i++){
+    if(id.length==5){
+      try{
+        document.getElementsByClassName("n6")[0].remove()
+      }
+      catch{
+        console.log("error")
+      }
+      break
+    }
     const template=document.importNode(box_template.content,true)
 
     await fetch(API_url_pokemon+ids[i])
     .then(res=>res.json())
     .then(data=>{
-      console.log(data)
       if(i==ids.length-1){
         template.querySelectorAll("div")[3].remove()
       }
@@ -241,6 +303,7 @@ async function branched_evolution(evolution_chain){
 
   evolution_container2.classList.add("evolution-container")
   OR.classList.add("or")
+  if(id.length!=5){
 
   if(evolution_chain.length==2&&evolution_chain[1].length==2){
     const temp=[evolution_chain[1][0],evolution_chain[0],evolution_chain[1][1]]
@@ -280,7 +343,7 @@ async function branched_evolution(evolution_chain){
         [evolution_chain[0],evolution_chain[1][1],evolution_chain[2][1]]
       ]
 
-      console.log(temp)
+
 
 
 
@@ -320,7 +383,10 @@ async function branched_evolution(evolution_chain){
       document.getElementsByClassName("arrow")[1].remove()
     }
   }
-
+  }
+  else{
+    box_6.remove()
+  }
   
 }
 
@@ -390,13 +456,21 @@ function set_uniqueness(is_legendary, is_mythical,is_baby, uniqueness_icon, uniq
   const starter=[1,4,7,152,155,158,252,255,258,387,390,393,495,498,501,650,653,656,722,725,728,810,813,816,906,909,912]
   const pseudo_legendary=[149,248,373,376,445,635,706,784,887,998]
   const small_text=document.getElementsByClassName("unique")[0]
-  console.log(mega_data[mega_index])
+
   if (is_legendary||id==772){
+    console.log("n")
     if(mega_data[mega_index]!=undefined){
+      console.log("n")
       if(mega_data[mega_index].form!="Mega"){
+        console.log("n")
         uniqueness_icon.classList = "legendary";
         uniqueness_label.textContent = "Legendary";
         uniqueness_label.style.color = "#c0e00a";
+      }
+      else{
+        uniqueness_icon.classList = "mega";
+        uniqueness_label.textContent = "Mega";
+        uniqueness_label.style.color = "#26c000";
       }
     }
     else{
