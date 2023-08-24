@@ -477,12 +477,14 @@
     {
         "api_id": "10077",
         "id": 382,
-        "form": "Primal"
+        "form":"Alternative",
+        "sub_name": "Primal"
     },
     {
         "api_id": "10078",
         "id": 383,
-        "form": "Primal"
+        "form":"Alternative",
+        "sub_name": "Primal"
     },
     {
         "api_id": "10079",
