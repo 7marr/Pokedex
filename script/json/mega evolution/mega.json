@@ -2,859 +2,1029 @@
     {
         "api_id": "10033",
         "id": 3,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10195",
         "id": 3,
-        "form": "Gigantamax"
+        "form": "Alternative",
+        "sub_name":"Gigantamax"
     },
     {
         "api_id": "10034",
         "id": 6,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10035",
         "id": 6,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10196",
         "id": 6,
-        "form": "Gigantamax"
+        "form": "Alternative",
+        "sub_name":"Gigantamax"
     },
     {
         "api_id": "10036",
         "id": 9,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10197",
         "id": 9,
-        "form": "Gigantamax"
+        "form": "Alternative",
+        "sub_name":"Gigantamax"
     },
     {
         "api_id": "10198",
         "id": 12,
-        "form": "Gigantamax"
+        "form": "Alternative",
+        "sub_name":"Gigantamax"
     },
     {
         "api_id": "10090",
         "id": 15,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10073",
         "id": 18,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10091",
         "id": 19,
-        "form": "Alolan"
+        "form": "Alternative",
+        "sub_name":"Alolan"
     },
     {
         "api_id": "10092",
         "id": 20,
-        "form": "Alolan"
+        "form": "Alternative",
+        "sub_name":"Alolan"
     },
     {
         "api_id": "10199",
         "id": 25,
-        "form": "Gigantamax"
+        "form": "Alternative",
+        "sub_name":"Gigantamax"
     },
     {
         "api_id": "10100",
         "id": 26,
-        "form":"Alolan"
+        "form":"Alternative",
+        "sub_name":"Alolan"
     },
     {
         "api_id": "10101",
         "id": 27,
-        "form": "Alolan"
+        "form": "Alternative",
+        "sub_name":"Alolan"
     },
     {
         "api_id": "10102",
         "id": 28,
-        "form": "Alolan"
+        "form": "Alternative",
+        "sub_name":"Alolan"
     },
     {
         "api_id": "10103",
         "id": 37,
-        "form":"Alolan"
+        "form":"Alternative",
+        "sub_name":"Alolan"
     },
     {
         "api_id": "10104",
         "id": 38,
-        "form":"Alolan"
+        "form":"Alternative",
+        "sub_name":"Alolan"
     },
         {
         "api_id": "10105",
         "id": 50,
-        "form": "Alolan"
+        "form": "Alternative",
+        "sub_name":"Alolan"
     },
     {
         "api_id": "10106",
         "id": 51,
-        "form": "Alolan"
+        "form": "Alternative",
+        "sub_name":"Alolan"
     },
     {
         "api_id": "10200",
         "id": 52,
-        "form": "Gigantamax"
+        "form": "Alternative",
+        "sub_name":"Gigantamax"
     },
     {
         "api_id": "10107",
         "id": 52,
-        "form": "Alolan"
+        "form": "Alternative",
+        "sub_name":"Alolan"
     },
     {
         "api_id": "10161",
         "id": 52,
-        "form": "Galarian"
+        "form": "Alternative",
+        "sub_name":"Galarian"
     },
     {
         "api_id": "10108",
         "id": 53,
-        "form": "Alolan"
+        "form": "Alternative",
+        "sub_name":"Alolan"
     },
     {
         "api_id": "10229",
         "id": 58,
-        "form": "Hisuian"
+        "form": "Alternative",
+        "sub_name":"Hisuian"
     },
     {
         "api_id": "10230",
         "id": 59,
-        "form": "Hisuian"
+        "form": "Alternative",
+        "sub_name":"Hisuian"
     },
     {
         "api_id": "10037",
         "id": 65,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10201",
         "id": 68,
-        "form": "Gigantamax"
+        "form": "Alternative",
+        "sub_name":"Gigantamax"
     },
     {
         "api_id": "10109",
         "id": 74,
-        "form": "Alolan"
+        "form": "Alternative",
+        "sub_name":"Alolan"
     },
     {
         "api_id": "10110",
         "id": 75,
-        "form": "Alolan"
+        "form": "Alternative",
+        "sub_name":"Alolan"
     },
     {
         "api_id": "10111",
         "id": 76,
-        "form": "Alolan"
+        "form": "Alternative",
+        "sub_name":"Alolan"
     },
     {
         "api_id": "10162",
         "id": 77,
-        "form": "Galarian"
+        "form": "Alternative",
+        "sub_name":"Galarian"
     },
     {
         "api_id": "10163",
         "id": 78,
-        "form": "Galarian"
+        "form": "Alternative",
+        "sub_name":"Galarian"
     },
     {
         "api_id": "10164",
         "id": 79,
-        "form": "Galarian"
+        "form": "Alternative",
+        "sub_name":"Galarian"
     },
     {
         "api_id": "10071",
         "id": 80,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10165",
         "id": 80,
-        "form": "Galarian"
+        "form": "Alternative",
+        "sub_name":"Galarian"
     },
     {
         "api_id": "10166",
         "id": 83,
-        "form": "Galarian"
+        "form": "Alternative",
+        "sub_name":"Galarian"
     },
     {
         "api_id": "10112",
         "id": 88,
-        "form": "Alolan"
+        "form": "Alternative",
+        "sub_name":"Alolan"
     },
     {
         "api_id": "10113",
         "id": 89,
-        "form": "Alolan"
+        "form": "Alternative",
+        "sub_name":"Alolan"
     },
     {
         "api_id": "10038",
         "id": 94,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10202",
         "id": 94,
-        "form": "Gigantamax"
+        "form": "Alternative",
+        "sub_name":"Gigantamax"
     },
     {
         "api_id": "10203",
         "id": 99,
-        "form": "Gigantamax"
+        "form": "Alternative",
+        "sub_name":"Gigantamax"
     },
     {
         "api_id": "10231",
         "id": 100,
-        "form": "Hisuian"
+        "form": "Alternative",
+        "sub_name":"Hisuian"
     },
     {
         "api_id": "10232",
         "id": 101,
-        "form": "Hisuian"
+        "form": "Alternative",
+        "sub_name":"Hisuian"
     },
     {
         "api_id": "10114",
         "id": 103,
-        "form": "Alolan"
+        "form": "Alternative",
+        "sub_name":"Alolan"
     },
     {
         "api_id": "10115",
         "id": 105,
-        "form": "Alolan"
+        "form": "Alternative",
+        "sub_name":"Alolan"
     },
     {
         "api_id": "10167",
         "id": 110,
-        "form": "Galarian"
+        "form": "Alternative",
+        "sub_name":"Galarian"
     },
     {
         "api_id": "10039",
         "id": 115,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10168",
         "id": 122,
-        "form": "Galarian"
+        "form": "Alternative",
+        "sub_name":"Galarian"
     },
     {
         "api_id": "10040",
         "id": 127,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10041",
         "id": 130,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10204",
         "id": 131,
-        "form": "Gigantamax"
+        "form": "Alternative",
+        "sub_name":"Gigantamax"
     },
     {
         "api_id": "10205",
         "id": 133,
-        "form": "Gigantamax"
+        "form": "Alternative",
+        "sub_name":"Gigantamax"
     },
     {
         "api_id": "10042",
         "id": 142,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10206",
         "id": 143,
-        "form": "Gigantamax"
+        "form": "Alternative",
+        "sub_name":"Gigantamax"
     },
     {
         "api_id": "10169",
         "id": 144,
-        "form":"Galarian"
+        "form":"Alternative",
+        "sub_name":"Galarian"
     },
     {
         "api_id": "10170",
         "id": 145,
-        "form":"Galarian"
+        "form":"Alternative",
+        "sub_name":"Galarian"
     },
     {
         "api_id": "10171",
         "id": 146,
-        "form":"Galarian"
+        "form":"Alternative",
+        "sub_name":"Galarian"
     },
     {
         "api_id": "10043",
         "id": 150,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10044",
         "id": 150,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10233",
         "id": 157,
-        "form": "Hisuian"
+        "form": "Alternative",
+        "sub_name":"Hisuian"
     },
     {
         "api_id": "10045",
         "id": 181,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10172",
         "id": 199,
-        "form": "Galarian"
+        "form": "Alternative",
+        "sub_name":"Galarian"
     },
     {
         "api_id": "10072",
         "id": 208,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10234",
         "id": 211,
-        "form": "Hisuian"
+        "form": "Alternative",
+        "sub_name":"Hisuian"
     },
     {
         "api_id": "10046",
         "id": 212,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10047",
         "id": 214,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10235",
         "id": 215,
-        "form": "Hisuian"
+        "form": "Alternative",
+        "sub_name":"Hisuian"
     },
     {
         "api_id": "10173",
         "id": 222,
-        "form": "Galarian"
+        "form": "Alternative",
+        "sub_name":"Galarian"
     },
     {
         "api_id": "10048",
         "id": 229,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10049",
         "id": 248,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10065",
         "id": 254,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10050",
         "id": 257,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10064",
         "id": 260,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10174",
         "id": 263,
-        "form": "Galarian"
+        "form": "Alternative",
+        "sub_name":"Galarian"
     },
     {
         "api_id": "10175",
         "id": 264,
-        "form": "Galarian"
+        "form": "Alternative",
+        "sub_name":"Galarian"
     },
     {
         "api_id": "10051",
         "id": 282,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10066",
         "id": 302,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10052",
         "id": 303,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10053",
         "id": 306,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10054",
         "id": 308,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10055",
         "id": 310,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10070",
         "id": 319,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10087",
         "id": 323,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10067",
         "id": 334,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10013",
         "id": 351,
-        "form":"Alternative"
+        "form":"Alternative",
+        "sub_name":""
     },
     {
         "api_id": "10014",
         "id": 351,
-        "form":"Alternative"
+        "form":"Alternative",
+        "sub_name":""
     },
     {
         "api_id": "10015",
         "id": 351,
-        "form":"Alternative"
+        "form":"Alternative",
+        "sub_name":""
     },
     {
         "api_id": "10056",
         "id": 354,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10057",
         "id": 359,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10074",
         "id": 362,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10089",
         "id": 373,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10076",
         "id": 376,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10062",
         "id": 380,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10063",
         "id": 381,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10077",
         "id": 382,
-        "form":"Alternative",
-        "sub_name": "Primal"
+        "form": "Alternative",
+        "sub_name":"Primal"
     },
     {
         "api_id": "10078",
         "id": 383,
-        "form":"Alternative",
-        "sub_name": "Primal"
+        "form": "Alternative",
+        "sub_name":"Primal"
     },
     {
         "api_id": "10079",
         "id": 384,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10001",
         "id": 386,
-        "form":"Alternative"
+        "form":"Alternative",
+        "sub_name":""
     },
     {
         "api_id": "10002",
         "id": 386,
-        "form":"Alternative"
+        "form":"Alternative",
+        "sub_name":""
     },
     {
         "api_id": "10003",
         "id": 386,
-        "form":"Alternative"
+        "form":"Alternative",
+        "sub_name":""
     },
     {
         "api_id": "10088",
         "id": 428,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10058",
         "id": 445,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10059",
         "id": 448,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10060",
         "id": 460,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10068",
         "id": 475,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10245",
         "id": 483,
-        "form": "Origin"
+        "form": "Alternative",
+        "sub_name":"Origin"
     },
     {
         "api_id": "10246",
         "id": 484,
-        "form": "Origin"
-    }, 
+        "form": "Alternative",
+        "sub_name":"Origin"
+    }
+    , 
     {
         "api_id": "10007",
         "id": 487,
-        "form": "Origin"
+        "form": "Alternative",
+        "sub_name":"Origin"
     },
     {
         "api_id": "10006",
         "id": 492,
-        "form":"Alternative"
+        "form":"Alternative",
+        "sub_name":""
     },
     {
         "api_id": "10236",
         "id": 503,
-        "form": "Hisuian"
-    },  
+        "form": "Alternative",
+        "sub_name":"Hisuian"
+    },
     {
         "api_id": "10069",
         "id": 531,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10237",
         "id": 549,
-        "form": "Hisuian"
+        "form": "Alternative",
+        "sub_name":"Hisuian"
     },
     {
         "api_id": "10176",
         "id": 554,
-        "form": "Galarian"
+        "form": "Alternative",
+        "sub_name":"Galarian"
     },
     {
         "api_id": "10177",
         "id": 555,
-        "form": "Galarian"
+        "form": "Alternative",
+        "sub_name":"Galarian"
     },
     {
         "api_id": "10179",
         "id": 562,
-        "form": "Galarian"
+        "form": "Alternative",
+        "sub_name":"Galarian"
     },
     {
         "api_id": "10207",
         "id": 569,
-        "form": "Gigantamax"
+        "form": "Alternative",
+        "sub_name":"Gigantamax"
     },
     {
         "api_id": "10238",
         "id": 570,
-        "form": "Hisuian"
+        "form": "Alternative",
+        "sub_name":"Hisuian"
     },
     {
         "api_id": "10239",
         "id": 571,
-        "form": "Hisuian"
+        "form": "Alternative",
+        "sub_name":"Hisuian"
     },
     {
         "api_id": "10180",
         "id": 618,
-        "form": "Galarian"
+        "form": "Alternative",
+        "sub_name":"Galarian"
     }, 
     {
         "api_id": "10240",
         "id": 628,
-        "form": "Hisuian"
+        "form": "Alternative",
+        "sub_name":"Hisuian"
     },
     {
         "api_id": "10019",
         "id": 641,
-        "form":"Therian"
+        "form":"Alternative",
+        "sub_name":"Therian"
     },
     {
         "api_id": "10020",
         "id": 642,
-        "form":"Therian"
+        "form":"Alternative",
+        "sub_name":"Therian"
     },
     {
         "api_id": "10021",
         "id": 645,
-        "form":"Therian"
+        "form":"Alternative",
+        "sub_name":"Therian"
     },
     {
         "api_id": "10022",
         "id": 646,
-        "form":"Alternative"
+        "form":"Alternative",
+        "sub_name":""
     },
     {
         "api_id": "10023",
         "id": 646,
-        "form":"Alternative"
+        "form":"Alternative",
+        "sub_name":""
     },
     {
         "api_id": "10024",
         "id": 647,
-        "form":"Alternative"
+        "form":"Alternative",
+        "sub_name":""
     },
     {
         "api_id": "10018",
         "id": 648,
-        "form":"Alternative"
+        "form":"Alternative",
+        "sub_name":""
     },
     {
         "api_id": "10025",
         "id": 678,
-        "form":"Female"
+        "form":"Alternative",
+        "sub_name":"Female"
     },
     {
         "api_id": "10241",
         "id": 705,
-        "form": "Hisuian"
+        "form": "Alternative",
+        "sub_name":"Hisuian"
     },
     {
         "api_id": "10242",
         "id": 706,
-        "form": "Hisuian"
+        "form": "Alternative",
+        "sub_name":"Hisuian"
     },
     {
         "api_id": "10243",
         "id": 713,
-        "form": "Hisuian"
+        "form": "Alternative",
+        "sub_name":"Hisuian"
     },
     {
         "api_id": "10120",
         "id": 718,
-        "form":"Alternative"
+        "form":"Alternative",
+        "sub_name":""
     },
     {
         "api_id": "10075",
         "id": 719,
-        "form": "Mega"
+        "form": "Mega",
+        "sub_name":""
     },
     {
         "api_id": "10086",
         "id": 720,
-        "form":"Alternative"
+        "form":"Alternative",
+        "sub_name":""
     },
     {
         "api_id": "10244",
         "id": 724,
-        "form": "Hisuian"
+        "form": "Alternative",
+        "sub_name":"Hisuian"
     },
     {
         "api_id": "10126",
         "id": 745,
-        "form":"Alternative"
+        "form":"Alternative",
+        "sub_name":""
     },
     {
         "api_id": "10152",
         "id": 745,
-        "form":"Alternative"
+        "form":"Alternative",
+        "sub_name":""
     },
     {
         "api_id": "10155",
         "id": 800,
-        "form":"Alternative"
+        "form":"Alternative",
+        "sub_name":""
     },
     {
         "api_id": "10156",
         "id": 800,
-        "form":"Alternative"
+        "form":"Alternative",
+        "sub_name":""
     },
     {
         "api_id": "10157",
         "id": 800,
-        "form":"Alternative"
+        "form":"Alternative",
+        "sub_name":""
     },
     {
         "api_id": "10147",
         "id": 801,
-        "form":"Original"
+        "form":"Alternative",
+        "sub_name":"Original"
     },
     {
         "api_id": "10208",
         "id": 809,
-        "form": "Gigantamax"
+        "form": "Alternative",
+        "sub_name":"Gigantamax"
     },
     {
         "api_id": "10209",
         "id": 812,
-        "form": "Gigantamax"
+        "form": "Alternative",
+        "sub_name":"Gigantamax"
     },
     {
         "api_id": "10210",
         "id": 815,
-        "form": "Gigantamax"
+        "form": "Alternative",
+        "sub_name":"Gigantamax"
     },
     {
         "api_id": "10211",
         "id": 818,
-        "form": "Gigantamax"
+        "form": "Alternative",
+        "sub_name":"Gigantamax"
     },
     {
         "api_id": "10212",
         "id": 823,
-        "form": "Gigantamax"
+        "form": "Alternative",
+        "sub_name":"Gigantamax"
     },
     {
         "api_id": "10213",
         "id": 826,
-        "form": "Gigantamax"
+        "form": "Alternative",
+        "sub_name":"Gigantamax"
     },
     {
         "api_id": "10214",
         "id": 834,
-        "form": "Gigantamax"
+        "form": "Alternative",
+        "sub_name":"Gigantamax"
     },
     {
         "api_id": "10215",
         "id": 839,
-        "form": "Gigantamax"
+        "form": "Alternative",
+        "sub_name":"Gigantamax"
     },
     {
         "api_id": "10216",
         "id": 841,
-        "form": "Gigantamax"
+        "form": "Alternative",
+        "sub_name":"Gigantamax"
     },
     {
         "api_id": "10217",
         "id": 842,
-        "form": "Gigantamax"
+        "form": "Alternative",
+        "sub_name":"Gigantamax"
     },
     {
         "api_id": "10218",
         "id": 844,
-        "form": "Gigantamax"
+        "form": "Alternative",
+        "sub_name":"Gigantamax"
     },
     {
         "api_id": "10184",
         "id": 849,
-        "form":"Alternative"
+        "form":"Alternative",
+        "sub_name":""
     },
     {
         "api_id": "10228",
         "id": 849,
-        "form": "Gigantamax"
+        "form": "Alternative",
+        "sub_name":"Gigantamax"
     },
     {
         "api_id": "10220",
         "id": 851,
-        "form": "Gigantamax"
+        "form": "Alternative",
+        "sub_name":"Gigantamax"
     },
     {
         "api_id": "10221",
         "id": 858,
-        "form": "Gigantamax"
+        "form": "Alternative",
+        "sub_name":"Gigantamax"
     },
     {
         "api_id": "10222",
         "id": 861,
-        "form": "Gigantamax"
+        "form": "Alternative",
+        "sub_name":"Gigantamax"
     },
     {
         "api_id": "10223",
         "id": 869,
-        "form": "Gigantamax"
+        "form": "Alternative",
+        "sub_name":"Gigantamax"
     },
     {
         "api_id": "10224",
         "id": 879,
-        "form": "Gigantamax"
+        "form": "Alternative",
+        "sub_name":"Gigantamax"
     },
     {
         "api_id": "10225",
         "id": 884,
-        "form": "Gigantamax"
+        "form": "Alternative",
+        "sub_name":"Gigantamax"
     },
     {
         "api_id": "10188",
         "id": 888,
-        "form":"Alternative"
+        "form":"Alternative",
+        "sub_name":""
     },
     {
         "api_id": "10189",
         "id": 889,
-        "form":"Alternative"
+        "form":"Alternative",
+        "sub_name":""
     },
     {
         "api_id": "10190",
         "id": 890,
-        "form":"Alternative"
+        "form":"Alternative",
+        "sub_name":""
     },
     {
         "api_id": "10226",
         "id": 892,
-        "form": "Gigantamax"
+        "form": "Alternative",
+        "sub_name":"Gigantamax"
     },
     {
         "api_id": "10191",
         "id": 892,
-        "form":"Alternative"
+        "form":"Alternative",
+        "sub_name":""
     },
     {
         "api_id": "10227",
         "id": 892,
-        "form": "Gigantamax"
+        "form": "Alternative",
+        "sub_name":"Gigantamax"
     },
     {
         "api_id": "10193",
         "id": 898,
-        "form":"Alternative"
+        "form":"Alternative",
+        "sub_name":""
     },
     {
         "api_id": "10194",
         "id": 898,
-        "form":"Alternative"
+        "form":"Alternative",
+        "sub_name":""
     },
     {
         "api_id": "10249",
         "id": 905,
-        "form":"Therian"
+        "form":"Alternative",
+        "sub_name":"Therian"
     },
     {
         "api_id": "10256",
         "id": 964,
-        "form":"Alternative"
+        "form":"Alternative",
+        "sub_name":""
     }
 ]
 
