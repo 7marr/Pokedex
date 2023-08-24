@@ -6,6 +6,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     width: 1120px;
+    overflow: hidden;
 }
 .n5 h2{
     color: #cecece;

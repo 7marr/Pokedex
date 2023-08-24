@@ -30,8 +30,18 @@
     height: 417px;
 
 }
+.n1 div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
+#subname{
+    color: #b3b3b3b3;
+    font-size: 30px;
+}
 #id{
+    width: fit-content;
     color: #b3b3b3b3;
     font-size: 30px;
 }

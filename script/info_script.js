@@ -62,6 +62,7 @@ function display_pokemon_1(data) {
   let pokemon_types = get_types(data.types);
   let pokemon_stats= data.stats
   // Get HTML elements and store them
+  const sub_name_element=document.getElementById("subname");
   const id_element = document.getElementById("id");
   const name_element = document.getElementById("name");
   const image_element = document.getElementById("image");
@@ -72,6 +73,17 @@ function display_pokemon_1(data) {
   const ability_element = document.getElementById("ability");
   const hidden_class = document.getElementsByClassName("ability")[1];
   const hidden_element = document.getElementById("hidden");
+
+  if(mega_data[mega_index]!=undefined&&mega_data[mega_index].sub_name!=""){
+    const sub_name=mega_data[mega_index].sub_name
+    sub_name_element.innerHTML=sub_name
+  }
+  else if(pokemon_id=="#0258"||pokemon_id=="#0259"){
+    sub_name_element.innerHTML="Cute"
+  }
+  else{
+    sub_name_element.remove()
+  }
   // Display Pokemon information
   id_element.textContent = pokemon_id;
   name_element.textContent = pokemon_name;
@@ -458,11 +470,8 @@ function set_uniqueness(is_legendary, is_mythical,is_baby, uniqueness_icon, uniq
   const small_text=document.getElementsByClassName("unique")[0]
 
   if (is_legendary||id==772){
-    console.log("n")
     if(mega_data[mega_index]!=undefined){
-      console.log("n")
       if(mega_data[mega_index].form!="Mega"){
-        console.log("n")
         uniqueness_icon.classList = "legendary";
         uniqueness_label.textContent = "Legendary";
         uniqueness_label.style.color = "#c0e00a";

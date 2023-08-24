@@ -10,7 +10,7 @@ const max_pokemons = 1010;
 const json_url = "https://raw.githubusercontent.com/7marr/Pokedex/main/script/json/search/";
 const pokeapi_url="https://pokeapi.co/api/v2/pokemon/"
 
-// Variables
+// Variables 
 let pokemons=[];
 let json_file = 1;
 let json_data;
@@ -131,7 +131,7 @@ function search(type) {
     }
     if (matches >= 60 || checked_pokemons >= max_pokemons&&search_value!="") {
         fetching_pokemon();
-      }
+    }
 
 
 }
