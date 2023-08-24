@@ -73,7 +73,7 @@
 
 /*----Parent div for centering content----*/
 #aaa{
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     margin-bottom: 10px;
