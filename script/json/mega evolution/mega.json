@@ -748,19 +748,19 @@
         "api_id": "10022",
         "id": 646,
         "form":"Alternative",
-        "sub_name":""
+        "sub_name":"Black"
     },
     {
         "api_id": "10023",
         "id": 646,
         "form":"Alternative",
-        "sub_name":"Black"
+        "sub_name":"White"
     },
     {
         "api_id": "10024",
         "id": 647,
         "form":"Alternative",
-        "sub_name":"White"
+        "sub_name":"Resolute"
     },
     {
         "api_id": "10018",
