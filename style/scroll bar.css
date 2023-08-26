@@ -5,6 +5,8 @@
 ::-webkit-scrollbar {
     width: 5px;
   }
+
+
   
   /* Handle */
   ::-webkit-scrollbar-thumb {
@@ -13,7 +15,7 @@
   
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
-    background-color: #313b75;
+    background-color: #5965a8;
   }
   
   /* Track on the horizontal scrollbar */
