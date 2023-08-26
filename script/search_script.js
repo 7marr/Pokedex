@@ -1,110 +1,110 @@
-// Get DOM elements
 const container = document.getElementsByClassName("container")[0];
 const affirmative = document.getElementById("aff");
 const negative=document.getElementById("neg");
 const loading = document.getElementsByClassName("loading")[0];
 const search_box = document.getElementsByClassName("search-box")[0];
 const return_button=document.getElementsByClassName("go-back")[0]
-// Constants and URLs
+
 const max_pokemons = 1010;
 const json_url = "https://raw.githubusercontent.com/7marr/Pokedex/main/script/json/search/";
 const pokeapi_url="https://pokeapi.co/api/v2/pokemon/"
+const max_display=120
 
-// Variables 
-let pokemons=[];
-let json_file = 1;
-let json_data;
-let checked_pokemons = 0;
 let search_value = "";
-let matches = 0;
+let json_file=1
+let json_data
+let time_out
+
+let matching_pokemons =[]
+let checked_pokemons = 0;
 let new_search=false
 let finnished=true
+let stopped=false
 
-function checkEnd(){
-    if(new_search==true&&finnished==false){
-        setTimeout(checkEnd,200)
-        console.log("jjjjj")
-    }
-    else{
-        new_search=false
-        finnished=true
-
-        if (search_value == "") {
-            container.innerHTML=""
-            finnished=false
-            console.log("njjnjnjj")
-            // Show the affirmative message if search box is empty
-            affirmative.style.display = "flex";
-            loading.style.display = "none";
-            negative.style.display="none"
-            //reset
-            new_search=false
-            finnished=true
-    
-        } 
-        else {
-            finnished=false
-            container.innerHTML=""
-
-            // Hide the affirmative message and show loading
-            affirmative.style.display = "none";
-            loading.style.display = "flex";
-            negative.style.display="none"
-    
-            setTimeout(fetch_json,1000)
-        }
-    }
-}
-
-search_box.addEventListener("input", event => {
-    search_value = event.target.value.trim().toLowerCase();
-    // Reset variables for a new search
-    json_file = 1;
-    checked_pokemons = 0;
-    matches=0
-    pokemons=[]
-    new_search=true
-    checkEnd()
-
-    }
-);
 
 return_button.addEventListener("click",event=>{
     window.location.href = "index.html"
 })
 
-// Function to fetch JSON data
-async function fetch_json() {
+search_box.addEventListener("input", event => {
 
+    affirmative.style.display = "none";
+    loading.style.display = "flex";
+    negative.style.display="none"
+
+
+
+
+
+    new_search=true
+
+
+    search_value = event.target.value.trim().toLowerCase();
+    clearTimeout(time_out)
+    time_out=setTimeout(check_traffic,500)
+    
+
+
+
+})
+
+function check_traffic(){
+    if(new_search&&!finnished){
+        console.log("checking")
+        setTimeout(check_traffic,200)
+    }
+    else{
+        stopped=false
+        container.innerHTML=""
+        new_search=false
+        finnished=true
+        json_file=1
+        matching_pokemons=[]
+        checked_pokemons=0
+        fetch_json()
+    }
+}
+
+
+
+async function fetch_json() {
+    finnished=false
     const response = await fetch(json_url + `${json_file}.json`);
     json_data = await response.json();
     
     filter()
 }
-// Function to determine search type (by ID or by name) and call search function
+
 
 function filter() {
-    if (is_int()) {
+    if(search_value==""){
+        loading.style.display="none"
+        affirmative.style.display="flex"
+        finnished=true
+    }
+    else if (is_int()) {
         // If the search value is a number, search by ID
-        search("id");
+            search("id");
     }
     else if(!is_int()){
         // If the search value is not a number, search by name
         search("name");
     }
 }
-// Function to check if the search value is an integer
+
 function is_int() {
     return !isNaN(parseInt(search_value));
 }
 
-// Function to perform the search
-function search(type) {
-    for (let i = 0;checked_pokemons < max_pokemons && matches < 60 &&search_value!=""; i++) {
+
+
+
+function search(type){
+    for(let i=0;matching_pokemons.length<max_display&&checked_pokemons<max_pokemons;i++){
         if(new_search){
             new_search=false
+            stopped=true
             finnished=true
-            container.innerHTML=""
             break
         }
 
@@ -116,41 +116,39 @@ function search(type) {
             break;
         }
         const value = type === "id" ? String(pokemon.id) : pokemon.name;
-        if (value.includes(search_value)&&search_value!="") {
+        if (value.includes(search_value)) {
             // If there's a match, push the ID of the pokemon to "pokemons"
-            pokemons.push(pokemon.id)
-            matches++;
+            matching_pokemons.push(pokemon.id)
         }
         checked_pokemons++;
     }
-
-    if(matches===0 && checked_pokemons>=max_pokemons&&search_value!=""){
-        loading.style.display="none"
-        negative.style.display="flex"
-        finnished=true
+    if(!stopped){
+        if(matching_pokemons.length===0 && checked_pokemons>=max_pokemons){
+            loading.style.display="none"
+            negative.style.display="flex"
+            finnished=true
+        }
+        else if (matching_pokemons.length >= max_display || checked_pokemons >= max_pokemons) {
+            fetching_pokemon()
+        }
     }
-    if (matches >= 60 || checked_pokemons >= max_pokemons&&search_value!="") {
-        fetching_pokemon();
-    }
-
 
 }
 
 async function fetching_pokemon() {
-    for (let i = 0; i <pokemons.length; i++) {
+    for (let i = 0; i <matching_pokemons.length; i++) {
         if(new_search){
             new_search=false
             finnished=true
-            container.innerHTML=""
             break
         }
-      await fetch(pokeapi_url + pokemons[i])
+      await fetch(pokeapi_url + matching_pokemons[i])
         .then((res) => res.json())
         .then((data) => display_pokemon(data));
     }
-    pokemons=[]
-    loading.style.display="none"
     finnished=true
+    loading.style.display="none"
+
 }
 
 
@@ -202,8 +200,3 @@ function display_pokemon(data) {
   
     container.appendChild(pokemon_box);
 }
-  
-
-
-
-

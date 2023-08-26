@@ -182,7 +182,6 @@ function find_alt_forms(){
     document.getElementsByClassName("n7")[0].remove()
   }
   else{
-    console.log(alt_forms)
     for(let i=0;i<alt_forms.length;i++){
       if(alt_forms[i]==id){
         alt_forms[i]=String(mega_id)
@@ -193,7 +192,6 @@ function find_alt_forms(){
 
 }
 async function fetch_alt_forms(ids){
-  console.log(ids)
   for(let i=0;i<ids.length;i++){
     await fetch(API_url_pokemon+ids[i])
     .then(res=>res.json())
@@ -475,9 +473,9 @@ function set_uniqueness(is_legendary, is_mythical,is_baby, uniqueness_icon, uniq
   const ancient=[138,139,140,141,142,345,346,347,348,408,409,410,411,564,565,566,567,696,697,698,699,880,881,882,883]
   const ultra_beast=[793,794,795,796,797,798,799,803,804,805,806]
   const starter=[1,4,7,152,155,158,252,255,258,387,390,393,495,498,501,650,653,656,722,725,728,810,813,816,906,909,912]
-  const pseudo_legendary=[149,248,373,376,445,635,706,784,887,998]
+  const pseudo_legendary=[149,230,248,289,306,330,373,376,445,612,635,706,715,784,887,983,998]
   const small_text=document.getElementsByClassName("unique")[0]
-
+  // aggron,noivern,haxorus,flygon
   if (is_legendary||id==772){
     if(mega_data[mega_index]!=undefined){
       if(mega_data[mega_index].form!="Mega"){
@@ -512,7 +510,12 @@ function set_uniqueness(is_legendary, is_mythical,is_baby, uniqueness_icon, uniq
     uniqueness_icon.classList = "heart";
     uniqueness_label.textContent = "Awesome";
     uniqueness_label.style.color = "#ffffff";
-    document.body.style.backgroundImage="url('img/mudkip wall.png')"
+    if(window.innerWidth<500){
+      document.body.style.backgroundImage="url('img/mudkip phone.png')"
+    }
+    else{
+      document.body.style.backgroundImage="url('img/mudkip wall.png')"
+    }
 
   } 
   else if (id.length>4) {

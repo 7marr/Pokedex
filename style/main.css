@@ -158,3 +158,43 @@
     rotateSlow 2s infinite cubic-bezier(0.4, 0, 0.2, 1); 
     width: 50px;
 }
+
+
+
+
+
+.warning{
+    display: none;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+
+}
+.unused{
+    background-color: rgba(255, 128, 149, 0.712);
+    color: rgb(83, 50, 50);
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgb(66, 32, 38);
+    padding: 15px;
+    border-radius: 10px;
+    flex-direction: column;
+}
+.unused h3,.unused p{
+    text-align: center;
+}
+.unused div{
+    line-height: 1.8;
+}
+
+
+
+
+@media (max-width:700px) {
+    .unused{
+        font-size: 12px;
+    }
+}

@@ -1,5 +1,6 @@
 // Constants
 const max_pokemon = 1010;
+const max_api_pokemons = 10271
 const not_loading=document.getElementById("aaa")
 const loading=document.getElementsByClassName("loading")[0]
 const container = document.getElementsByClassName("container")[0];
@@ -26,12 +27,12 @@ const close_filter_button=document.getElementsByClassName("close")[0]
 const filter_button=document.getElementsByClassName("filter")[0]
 
 
-const classes=["Common","Alt-forms","Starter","Baby","Ancient","Ultra beast","Legendary","P-legendary","Mythical","Paradox"]
+const classes=["Unused","Alt-forms","Starter","Baby","Ancient","Ultra beast","Legendary","P-legendary","Mythical","Paradox"]
 const paradox=[984,985,986,987,988,989,990,991,992,993,994,995,1005,1006,1009,1010]
 const ancient=[138,139,140,141,142,345,346,347,348,408,409,410,411,564,565,566,567,696,697,698,699,880,881,882,883]
 const ultra_beast=[793,794,795,796,797,798,799,803,804,805,806]
 const starter=[1,4,7,152,155,158,252,255,258,387,390,393,495,498,501,650,653,656,722,725,728,810,813,816,906,909,912]
-const pseudo_legendary=[149,248,373,376,445,635,706,10242,784,887,998]
+const pseudo_legendary=[149,230,248,289,306,330,373,376,445,612,635,706,715,784,887,983,998]
 
 const legendary=[144,145,146,150,243,
     244,245,249,250,377,378,379,380,
@@ -73,7 +74,7 @@ async function fetching_megaData(){
 // main pokemon fetching function 
 async function fetching_pokemon(startpoint,endpoint) {
     // check if the value of endpoint is greater then the actual number of pokemon
-    if(endpoint>max_pokemon){
+    if(endpoint>max_pokemon&&endpoint<10000){
         endpoint=max_pokemon
         document.getElementById("load-container").style.display="none";
     }
@@ -83,7 +84,6 @@ async function fetching_pokemon(startpoint,endpoint) {
 
     finnished_displaying=false
     for (let i = startpoint; i <= endpoint; i++) {
-        console.log("still....")
         if(new_filter){
             new_filter=false
             finnished_displaying=true
@@ -242,6 +242,7 @@ for(let i=0;i<filter_options.length;i++){
 
 
 function apply_filter(){
+    document.getElementsByClassName("warning")[0].style.display="none"
     close_filter()
     active=selected_option.innerHTML.replace("Selected : ","")
     if(current_filter!=active){
@@ -303,7 +304,7 @@ function filter_by_gen(gen){
     document.getElementById("load-container").style.display="none";
 
 }
-function filter_by_class(index){
+async function filter_by_class(index){
     index-=2
     document.getElementById("load-container").style.display="none";
 
@@ -317,6 +318,25 @@ function filter_by_class(index){
         }
         console.log(arr)
         fetching_pokemon2(arr,"forms")
+    }
+    else if(index==-2){
+        document.getElementsByClassName("warning")[0].style.display="flex"
+        let temp=[]
+        let index=0
+        for(let i=0;i<mega_data.length;i++){
+            temp.push(mega_data[i].api_id)
+        }
+        temp.sort()
+        for(let i=10001;i<max_api_pokemons;i++){
+            if(i!=temp[index]){
+                await fetch(url+i)
+                .then(res=>res.json())
+                .then(data=>display_pokemon(data,false))
+            }
+            else{
+                index++
+            }
+        }
     }
 }
 async function filter_by_type(type){
