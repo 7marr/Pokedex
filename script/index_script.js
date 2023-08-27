@@ -70,7 +70,6 @@ async function fetching_megaData(){
 }
 
 
-
 // main pokemon fetching function 
 async function fetching_pokemon(startpoint,endpoint) {
     // check if the value of endpoint is greater then the actual number of pokemon
@@ -128,11 +127,47 @@ async function fetching_pokemon(startpoint,endpoint) {
     finnished_displaying=true
 
 }
+async function fetching_pokemon2(arr,func){
+    finnished_displaying=false
+    display_loading_screen("flex","none")
+    for(let i=0;i<arr.length;i++){
+        if(new_filter){
+            new_filter=false
+            finnished_displaying=true
+            break
+        }
+        let id2
+        if(func=="type"){
+            id2=arr[i].pokemon.url.replace("https://pokeapi.co/api/v2/pokemon/","").replace("/","")
+        }
+        else{
+            id2=String(arr[i])
+        }
 
-function display_loading_screen(state1,state2){
-    loading.style.display=state1
-    not_loading.style.display=state2
+  
+        if(func=="forms"||id2.length<5){
+            await fetch("https://pokeapi.co/api/v2/pokemon/"+id2)
+            .then(res=>res.json())
+            .then(data=>{
+                if(func!="forms"){
+                    display_pokemon(data,false)
+                    
+                }
+                else{
+                    data.name=data.name.replace("-mega","").replace("-x"," X").replace("-y"," Y").replace("-primal","").replace("-origin","")
+                    data.id=mega_data[i].id
+                    display_pokemon(data,mega_data[i].api_id)
+                }
+                })
+        }
+
+    }
+    display_loading_screen("none","flex")
+    finnished_displaying=true
+
 }
+
+
 function display_pokemon(data,mega) {
     const pokemon_name = data.name;
     const pokemon_image = data.sprites.other["official-artwork"].front_default;
@@ -212,8 +247,6 @@ function handle_filter_options(event){
 
 
     }
-//22,31
-
 }
 
 
@@ -245,6 +278,7 @@ function apply_filter(){
     document.getElementsByClassName("warning")[0].style.display="none"
     close_filter()
     active=selected_option.innerHTML.replace("Selected : ","")
+    sessionStorage.setItem("filter",active)
     if(current_filter!=active){
     current_filter=active
     new_filter=true
@@ -254,12 +288,12 @@ function apply_filter(){
     //10242
 }
 function FilterBy(active){
-    console.log(active)
     if(new_filter==true&&finnished_displaying==false){
         setTimeout(()=>{FilterBy(active)},200)
-        console.log("kkkkk",new_filter,finnished_displaying)
+
     }
     else{
+        active=active.trim()
         new_filter=false
         finnished_displaying=true
         container.innerHTML=""
@@ -316,7 +350,7 @@ async function filter_by_class(index){
         for(let i =0;i<mega_data.length;i++){
             arr.push(mega_data[i].api_id)
         }
-        console.log(arr)
+
         fetching_pokemon2(arr,"forms")
     }
     else if(index==-2){
@@ -347,48 +381,21 @@ async function filter_by_type(type){
 
 }
 
-async function fetching_pokemon2(arr,func){
-    finnished_displaying=false
-    display_loading_screen("flex","none")
-    for(let i=0;i<arr.length;i++){
-        if(new_filter){
-            new_filter=false
-            finnished_displaying=true
-            break
-        }
-        let id2
-        if(func=="type"){
-            id2=arr[i].pokemon.url.replace("https://pokeapi.co/api/v2/pokemon/","").replace("/","")
-        }
-        else{
-            id2=String(arr[i])
-        }
 
-        console.log(id2)
-        if(func=="forms"||id2.length<5){
-            await fetch("https://pokeapi.co/api/v2/pokemon/"+id2)
-            .then(res=>res.json())
-            .then(data=>{
-                if(func!="forms"){
-                    display_pokemon(data,false)
-                    
-                }
-                else{
-                    data.name=data.name.replace("-mega","").replace("-x"," X").replace("-y"," Y").replace("-primal","").replace("-origin","")
-                    data.id=mega_data[i].id
-                    display_pokemon(data,mega_data[i].api_id)
-                }
-                })
-        }
-
-    }
-    display_loading_screen("none","flex")
-    finnished_displaying=true
+if(sessionStorage.getItem("filter")==null || sessionStorage.getItem("filter")=="None"){
+    fetching_megaData()
+}
+else{
+    fetch(mega_url)
+    .then(res=>res.json())
+    .then(data=>{
+        mega_data=data
+        new_filter=true
+        selected_option.innerHTML=`Selected :  ${sessionStorage.getItem("filter")}`
+        FilterBy(sessionStorage.getItem("filter"))
+    })
 
 }
-
-fetching_megaData()
-
 
 
 
@@ -410,5 +417,9 @@ function remove_unnecessary(str) {
       str = str.replace(unnecessary[i], "");
     }
     return str.replace("Nidoran m", "Nidoran ♂").replace("Nidoran f", "Nidoran ♀").replace("fetchd","fetch'd").replace("Type null","Type:Null");
-  }
+}
 
+function display_loading_screen(state1,state2){
+    loading.style.display=state1
+    not_loading.style.display=state2
+}
