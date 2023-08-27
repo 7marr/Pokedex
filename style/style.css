@@ -8,14 +8,8 @@
 body{
     margin: 0px;
     padding: 0px;
-    background-image: url("../img/wall2.png");
+    background-image: url("../img/wall.png");
     background-position: center;
     background-attachment: fixed;
     background-size: cover;
-}
-
-@media (max-width:470px) {
-    body{
-        background-image: url("../img/wall1.png");
-    }
 }
