@@ -405,7 +405,7 @@ function capitalize(str) {
 }
 
 function remove_unnecessary(str) {
-    let unnecessary = [" gmax"," alola"," galar"," sunny"," rainy"," snowy"," attack"," defense"," speed",
+    let unnecessary = [" paldea"," eternal"," ash"," gmax"," alola"," galar"," sunny"," rainy"," snowy"," attack"," defense"," speed",
     " sky"," hisui"," therian", "black","white"," resolute"," pirouette"," female",
     " complete"," unbound"," low key"," midnight"," dusk"," dawn"," ultra"," eternamax",
      "crowned"," rapid strike"," shadow"," hero"," baile", " male", " normal", " plant", " altered", " land",

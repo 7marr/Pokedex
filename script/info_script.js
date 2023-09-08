@@ -614,10 +614,13 @@ async function fetch_detailed_ability(abilities_urls){
   }
   const options=document.getElementsByClassName("options")
   const par=document.querySelectorAll(".details p")
-  if(options[1].innerHTML==options[0].innerHTML){
-    options[1].remove()
-    par[1].remove()
+  if(options.length==2){
+    if(options[1].innerHTML==options[0].innerHTML){
+      options[1].remove()
+      par[1].remove()
+    }
   }
+
   options[0].classList.add("active")
   par[0].style.display="inline"
 
@@ -920,7 +923,7 @@ function id_format(id) {
 }
 
 function remove_unnecessary(str) {
-  let unnecessary = [" gmax"," alola"," galar"," sunny"," rainy"," snowy"," attack"," defense"," speed",
+  let unnecessary = [" paldea"," eternal"," ash"," gmax"," alola"," galar"," sunny"," rainy"," snowy"," attack"," defense"," speed",
   " sky"," hisui"," therian", "black","white"," resolute"," pirouette"," female",
   " complete"," unbound"," low key"," midnight"," dusk"," dawn"," ultra"," eternamax",
    "crowned"," rapid strike"," shadow"," hero"," origin"," primal"," baile", " male"," mega",
