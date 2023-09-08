@@ -10,6 +10,11 @@
     font-size: 25px;
     font-weight: bold;
 }
+@media (max-width:600px) {
+    .title{
+        font-size: 18px;
+    }
+}
 .chart{
     width: 100%;
     display: flex;

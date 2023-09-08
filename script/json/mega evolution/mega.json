@@ -372,6 +372,12 @@
         "sub_name":"Mega"
     },
     {
+        "api_id": "10253",
+        "id": 194,
+        "form":"Alternative",
+        "sub_name":"Paldean"
+    },
+    {
         "api_id": "10172",
         "id": 199,
         "form": "Alternative",
@@ -767,6 +773,18 @@
         "id": 648,
         "form":"Alternative",
         "sub_name":"Pirouette"
+    },
+    {
+        "api_id": "10117",
+        "id": 658,
+        "form":"Alternative",
+        "sub_name":"Ash's"
+    },
+    {
+        "api_id": "10061",
+        "id": 670,
+        "form":"Alternative",
+        "sub_name":"Eternal"
     },
     {
         "api_id": "10025",

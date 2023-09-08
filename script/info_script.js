@@ -61,6 +61,10 @@ function display_pokemon_1(data) {
   let pokemon_abilities = get_abilities(data.abilities);
   let pokemon_types = get_types(data.types);
   let pokemon_stats= data.stats
+  if(data.base_experience!=null){
+    document.getElementsByClassName("base")[0].innerHTML="Base xp : "+data.base_experience
+  }
+
   // Get HTML elements and store them
   const sub_name_element=document.getElementById("subname");
   const id_element = document.getElementById("id");
@@ -111,14 +115,43 @@ function display_pokemon_1(data) {
     weight_element.textContent = pokemon_weight / 10 + " kg";
   }
 
+
+
   set_type(pokemon_types, type_1_element, type_2_element);
   name_size(pokemon_name, name_element);
   set_abilities(pokemon_abilities, ability_element, hidden_class, hidden_element);
   set_sprite(pokemon_image,data)
   set_stats(pokemon_stats)
+  set_EV(pokemon_stats)
   fetch_damage(pokemon_types)
 }
+function set_EV(stats){
+  console.log(stats)
+  const stat_name={
+    "hp":" HP",
+    "attack":" Att",
+    "defense":" Def",
+    "special-attack":" S.Att",
+    "special-defense":" S.Def",
+    "speed":" Speed"
 
+  }
+
+  const EV = document.getElementById("EV")
+  EV.innerHTML=" "
+  for(let i=0;i<stats.length;i++){
+    if(stats[i].effort!=0){
+      if(EV.innerHTML!=" "){
+        EV.innerHTML +=" / "
+      }
+      else{
+        EV.innerHTML="&ThinSpace;"
+      }
+      EV.innerHTML +=stats[i].effort+stat_name[stats[i].stat.name]
+    }
+  }
+
+}
 
 // Fetch Pokemon data from API and call display_pokemon_2 to show it
 function fetching_pokemon_2() {
@@ -160,10 +193,109 @@ async function display_pokemon_2(data) {
   description_element.textContent = find_en_description(pokemon_description);
   gen_element.textContent = pokemon_gen;
   set_uniqueness(is_legendary, is_mythical,is_baby, uniqueness_icon, uniqueness_label);
-
+  training_breading(data)
 
 }
 
+function training_breading(data){
+  const happiness=data.base_happiness
+  const capture_rate=data.capture_rate
+  const hatch_counter=data.hatch_counter
+  const growth_rate=data.growth_rate.name
+  const F_gender_rate=data.gender_rate*100/8
+
+
+  document.getElementsByClassName("base")[1].innerHTML="Happiness : "+happiness
+  document.getElementsByClassName("base")[3].innerHTML="Catch rate : "+capture_rate
+
+  const GrowthRate=document.getElementById("growth-rate")
+  GrowthRate.innerHTML=capitalize(growth_rate).replaceAll("-"," ")
+
+
+  // Gender
+  set_gender(F_gender_rate)
+
+  // Egg cycle
+  const EggCycle = document.getElementById("egg-cycle")
+  EggCycle.innerHTML=`${hatch_counter+1} (${(hatch_counter+1)*255} Steps)`
+
+  // Egg groups
+  let egg_group=data.egg_groups
+  const EggGroup=document.getElementById("egg-group")
+  EggGroup.innerHTML=""
+
+  if(egg_group[0].name=="no-eggs"){
+    EggGroup.innerHTML="No egg discovered"
+  }
+  else{
+    for(let i=0;i<egg_group.length;i++){
+      if(i!=0){
+        EggGroup.innerHTML+=" & "
+      }
+      EggGroup.innerHTML+=capitalize(egg_group[i].name)
+    }
+  }
+
+
+
+
+
+
+  console.log(`happiness : ${happiness}\ncapture_rate : ${capture_rate}\nhatch_counter : ${hatch_counter}\ngrowth_rate : ${growth_rate}\nF_gender_rate : ${F_gender_rate}\negg_group_name : ${EggGroup.innerHTML}`)
+  
+
+}
+
+function set_gender(F_gender_rate){
+  const GenderRate= document.getElementById("gender")
+
+  if(F_gender_rate < 0){
+    const genderless= document.createElement("div")
+    genderless.classList="gender genderless"
+    genderless.innerHTML="Genderless"
+    GenderRate.append(genderless)
+  }
+  else{
+    const genders=[
+                  {
+                  "gender":"male",
+                  "percentage": String(100 - F_gender_rate) ,
+                  "symbol":"♂"
+                  },
+                  {
+                    "gender":"female",
+                    "percentage": String(F_gender_rate) ,
+                    "symbol":"♀"
+                  }
+                  ]
+
+    for(let i=0;i<2;i++){
+      const gender=document.createElement("div")
+      gender.classList="gender "+genders[i].gender
+      gender.style.width = genders[i].percentage+"%"
+      gender.innerHTML=`${genders[i].symbol} ${genders[i].percentage} %`
+      GenderRate.append(gender)
+    }
+    const male=document.getElementsByClassName("male")[0]
+    const female=document.getElementsByClassName("female")[0]
+    if(F_gender_rate==100){
+      male.remove()
+      female.style.borderRadius="10px"
+    }
+    else if(F_gender_rate==0){
+      male.style.borderRadius="10px"
+      female.remove()
+    }
+    else if(F_gender_rate<30){
+      female.style.width="30%"
+    }
+    else if(F_gender_rate>70){
+      male.style.width="30%"
+    }
+
+  }
+
+}
 function find_alt_forms(){
   let form_id
   if(id.length==5){
@@ -179,7 +311,7 @@ function find_alt_forms(){
     }
   }
   if(alt_forms.length==0){
-    document.getElementsByClassName("n7")[0].remove()
+    document.getElementById("alternative-forms").remove()
   }
   else{
     for(let i=0;i<alt_forms.length;i++){
@@ -263,7 +395,7 @@ async function get_evo_ids(data){
 
 
   if(evolution_chain.length==1){
-    document.getElementsByClassName("container")[2].remove()
+    document.getElementById("evolution-chain").remove()
   }
   else{
     if(chain_type=="linear"){
@@ -285,7 +417,7 @@ async function linear_evolution(ids,container){
   for(let i=0;i<ids.length;i++){
     if(id.length==5){
       try{
-        document.getElementsByClassName("n6")[0].remove()
+        document.getElementById("evolution-chain").remove()
       }
       catch{
         console.log("error")
@@ -436,18 +568,73 @@ function set_type(type, type_1_element, type_2_element) {
 
 // Function to get abilities from the data and categorize them into normal and hidden abilities
 function get_abilities(arr) {
+  let abilities_urls=[]
   let hidden = "";
   let normal = [];
   for (let i = 0; i < arr.length; i++) {
+    abilities_urls.push(arr[i]["ability"]["url"])
     if (arr[i]["is_hidden"]) {
       hidden = arr[i]["ability"]["name"];
     } else {
       normal.push(arr[i]["ability"]["name"]);
     }
   }
+  fetch_detailed_ability(abilities_urls)
   return [normal, hidden];
 }
+async function fetch_detailed_ability(abilities_urls){
+  for(let i=0;i<abilities_urls.length;i++){
+    await fetch(abilities_urls[i])
+    .then(res=>res.json())
+    .then(data=>
+      {
+        const names_container=document.getElementsByClassName("details-container")[0]
+        const container=document.getElementsByClassName("details")[0]
+        const ability=document.createElement("div")
+        ability.classList="options"
+        ability.innerHTML=capitalize(data.name).replace("-"," ")
+        names_container.append(ability)
+        const info=document.createElement("p")
+        info.style.display="none"
+        if(data.effect_entries.length==0){
+          info.innerHTML="No description was provided ."
+          container.append(info)
+        }
+        else{
+          for(let i=0;i<data.effect_entries.length;i++){
+            if(data.effect_entries[i].language.name=="en"){
+              info.innerHTML=data.effect_entries[i].effect.replace("Overworld:","<br> Overworld:")
+              container.append(info)
+            }
+          }
+        }
 
+      }
+      )
+  }
+  const options=document.getElementsByClassName("options")
+  const par=document.querySelectorAll(".details p")
+  if(options[1].innerHTML==options[0].innerHTML){
+    options[1].remove()
+    par[1].remove()
+  }
+  options[0].classList.add("active")
+  par[0].style.display="inline"
+
+  for(let i=0;i<options.length;i++){
+    options[i].addEventListener("click",function(){switch_ability(options,i,par)})
+  }
+
+}
+function switch_ability(options,index,par){
+  for(let i=0;i<options.length;i++){
+    options[i].classList="options"
+    par[i].style.display="none"
+  }
+  options[index].classList.add("active")
+  par[index].style.display="inline"
+
+}
 // Function to set abilities on the UI
 function set_abilities(pokemon_abilities, ability_element, hidden_class, hidden_element) {
   if (pokemon_abilities[1] != "") {
@@ -626,6 +813,7 @@ function set_stats(stats){
   }
 
 }
+
 async function fetch_damage(types){
   if(types.length==1){
     fetch(`${github_types_url}${types[0]}.json`)
@@ -787,24 +975,6 @@ function roman_to_num(str) {
 
 
 fetching_megaData(fetching_pokemon_2)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
