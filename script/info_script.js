@@ -592,7 +592,7 @@ async function fetch_detailed_ability(abilities_urls){
         const container=document.getElementsByClassName("details")[0]
         const ability=document.createElement("div")
         ability.classList="options"
-        ability.innerHTML=capitalize(data.name).replace("-"," ")
+        ability.innerHTML=capitalize(data.name).replaceAll("-"," ")
         names_container.append(ability)
         const info=document.createElement("p")
         info.style.display="none"
