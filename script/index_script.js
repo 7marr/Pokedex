@@ -1,6 +1,6 @@
 // Constants
 const max_pokemon = 1025;
-const max_api_pokemons = 10271
+const max_api_pokemons = 10277
 const not_loading=document.getElementById("aaa")
 const loading=document.getElementsByClassName("loading")[0]
 const container = document.getElementsByClassName("container")[0];
