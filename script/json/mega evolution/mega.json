@@ -1033,6 +1033,12 @@
         "sub_name":"Shadow Rider"
     },
     {
+        "api_id": "10272",
+        "id": 901,
+        "form":"Alternative",
+        "sub_name":"BloodMoon"
+    },
+    {
         "api_id": "10249",
         "id": 905,
         "form":"Alternative",
@@ -1043,7 +1049,20 @@
         "id": 964,
         "form":"Alternative",
         "sub_name":"Hero"
+    },
+    {
+        "api_id": "10276",
+        "id": 1024,
+        "form":"Alternative",
+        "sub_name":"Terastal"
+    },
+    {
+        "api_id": "10277",
+        "id": 1024,
+        "form":"Alternative",
+        "sub_name":"Stellar"
     }
 ]
+
 
 
