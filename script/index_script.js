@@ -49,8 +49,8 @@ const classes_vars=[starter,baby,ancient,ultra_beast,legendary,pseudo_legendary,
 
 // Variables
 //  manage how many pokemons are displayed
-let startpoint = 1000;
-let endpoint = 1020;
+let startpoint = 1;
+let endpoint = 120;
 let steps=120
 // store the mega data and wich index is in
 let mega_data
