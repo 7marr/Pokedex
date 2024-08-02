@@ -28,11 +28,11 @@ const filter_button=document.getElementsByClassName("filter")[0]
 
 
 const classes=["Unused","Alt-forms","Starter","Baby","Ancient","Ultra beast","Legendary","P-legendary","Mythical","Paradox"]
-const paradox=[984,985,986,987,988,989,990,991,992,993,994,995,1005,1006,1009,1010]
+const paradox=[984,985,986,987,988,989,990,991,992,993,994,995,1005,1006,1009,1010,1020,1021,1022,1023]
 const ancient=[138,139,140,141,142,345,346,347,348,408,409,410,411,564,565,566,567,696,697,698,699,880,881,882,883]
 const ultra_beast=[793,794,795,796,797,798,799,803,804,805,806]
 const starter=[1,4,7,152,155,158,252,255,258,387,390,393,495,498,501,650,653,656,722,725,728,810,813,816,906,909,912]
-const pseudo_legendary=[149,230,248,289,306,330,373,376,445,612,635,706,715,784,887,983,998]
+const pseudo_legendary=[149,230,248,289,306,330,373,376,445,612,635,706,715,784,887,983,998,1018]
 
 const legendary=[144,145,146,150,243,
     244,245,249,250,377,378,379,380,
@@ -41,15 +41,16 @@ const legendary=[144,145,146,150,243,
     642,643,644,645,646,716,717,718,772,773,
     785,786,787,788,789,790,791,792,800,888,
     889,890,891,892,894,895,896,897,898,905,
-    1001,1002,1003,1004,1008,1007]
-const mythical=[151,251,385,386,489,490,491,492,493,494,647,648,649,719,720,721,801,802,807,808,809,893]
+    1001,1002,1003,1004,1008,1007,1014,1015,
+    1016,1017,1024]
+const mythical=[151,251,385,386,489,490,491,492,493,494,647,648,649,719,720,721,801,802,807,808,809,893,1025]
 const baby=[172,173,174,175,236,238,239,240,298,360,406,433,438,439,440,446,447,458,848]
 const classes_vars=[starter,baby,ancient,ultra_beast,legendary,pseudo_legendary,mythical,paradox]
 
 // Variables
 //  manage how many pokemons are displayed
-let startpoint = 1;
-let endpoint = 120;
+let startpoint = 1000;
+let endpoint = 1020;
 let steps=120
 // store the mega data and wich index is in
 let mega_data
@@ -328,7 +329,7 @@ function filter_by_gen(gen){
     let gens=[
         [1,151,0],[152,251,60],[252,386,72],
         [387,493,102],[494,649,111],[650,721,129],
-        [722,809,138],[810,905,146],[906,1010,173]
+        [722,809,138],[810,905,146],[906,1025,174]
     ]
     const startpoint=gens[gen-1][0]
     const endpoint=gens[gen-1][1]
@@ -411,7 +412,7 @@ function remove_unnecessary(str) {
      "crowned"," rapid strike"," shadow"," hero"," baile", " male", " normal", " plant", " altered", " land",
      " red striped", " standard", " incarnate", " ordinary", " aria", " shield",
       " average", " 50", " midday", " solo", " disguised", " amped", " ice"," red meteor",
-       " full belly", " single strike"];
+       " full belly", " single strike"," terastal"," stellar"," bloodmoon"];
     str = str.replaceAll("-", " ");
     for (let i = 0; i < unnecessary.length; i++) {
       str = str.replace(unnecessary[i], "");

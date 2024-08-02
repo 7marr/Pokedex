@@ -5,7 +5,7 @@ const loading = document.getElementsByClassName("loading")[0];
 const search_box = document.getElementsByClassName("search-box")[0];
 const return_button=document.getElementsByClassName("go-back")[0]
 
-const max_pokemons = 1010;
+const max_pokemons = 1025;
 const json_url = "https://raw.githubusercontent.com/7marr/Pokedex/main/script/json/search/";
 const pokeapi_url="https://pokeapi.co/api/v2/pokemon/"
 const max_display=120

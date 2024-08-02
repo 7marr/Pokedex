@@ -658,12 +658,12 @@ function set_abilities(pokemon_abilities, ability_element, hidden_class, hidden_
 }
 
 function set_uniqueness(is_legendary, is_mythical,is_baby, uniqueness_icon, uniqueness_label) {
-  const favorites=[258,259,260,359,10064]
-  const paradox=[984,985,986,987,988,989,990,991,992,993,994,995,1005,1006,1009,1010]
+  const favorites=[258,259,260,10064]
+  const paradox=[984,985,986,987,988,989,990,991,992,993,994,995,1005,1006,1009,1010,1020,1021,1022,1023]
   const ancient=[138,139,140,141,142,345,346,347,348,408,409,410,411,564,565,566,567,696,697,698,699,880,881,882,883]
   const ultra_beast=[793,794,795,796,797,798,799,803,804,805,806]
   const starter=[1,4,7,152,155,158,252,255,258,387,390,393,495,498,501,650,653,656,722,725,728,810,813,816,906,909,912]
-  const pseudo_legendary=[149,230,248,289,306,330,373,376,445,612,635,706,715,784,887,983,998]
+  const pseudo_legendary=[149,230,248,289,306,330,373,376,445,612,635,706,715,784,887,983,998,1018]
   const small_text=document.getElementsByClassName("unique")[0]
   // aggron,noivern,haxorus,flygon
   if (is_legendary||id==772){
@@ -929,7 +929,7 @@ function remove_unnecessary(str) {
    "crowned"," rapid strike"," shadow"," hero"," origin"," primal"," baile", " male"," mega",
     " normal"," red meteor", " plant", " altered", " land", " red striped", " standard", " incarnate",
      " ordinary", " aria", " shield", " average", " 50", " midday", " solo", " disguised", " amped", " ice",
-      " full belly", " single strike"];
+      " full belly", " single strike"," terastal"," stellar"," bloodmoon"];
   str = str.replaceAll("-", " ");
   for (let i = 0; i < unnecessary.length; i++) {
     str = str.replace(unnecessary[i], "");
